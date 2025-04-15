@@ -1,0 +1,2 @@
+shampoo m1 2 5.00 10.00
+brinquedo marca2 6 2.00 10.80

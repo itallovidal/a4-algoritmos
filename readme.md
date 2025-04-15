@@ -13,18 +13,19 @@ roupas, imprimindo no final do dia, uma série de relatórios.
 | Nome Sobrenome    | [Matrícula]    |
 
 # Requisitos Funcionais:
-### [ ❌ ] **Cadastro de Vendas:** 
+### [ ✅ ] **Cadastro de Vendas:** 
 Registrar os seguintes dados por venda realizada:
 - Código do item
 - Nome do item
 - Marca do item
 - Quantidade de itens
 - Preço unitário do item
+- Total da venda
 
-### [ ❌ ] **Cálculo do Valor Total da Venda:**
+### [ ✅ ] **Cálculo do Valor Total da Venda:**
    - Após cada entrada de novo item, o programa deve chamar uma função para calcular automaticamente o valor total da venda.
 
-### [ ❌ ] **Desconto Condicional:**
+### [ ✅ ] **Desconto Condicional:**
    - Aplicar automaticamente **10% de desconto** no valor total da venda quando a quantidade for **maior ou igual a 3 unidades**.
 
 ### [ ❌ ] **Cálculo de Clientes por Dia:**
