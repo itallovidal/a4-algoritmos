@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct Sell {
   // char id[10]; // TODO fazer funcão que gera UUID
@@ -9,6 +10,7 @@ struct Sell {
   int quantity;
   float unitValue;
   float totalValue;
+  time_t sellDate;
 };
 
 void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
@@ -28,10 +30,12 @@ void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
     printf("  Quantidade: %d\n", sellsToRegister[i].quantity);
     printf("  Unit: %.2f\n", sellsToRegister[i].unitValue);
     printf("  Total: %.2f\n", sellsToRegister[i].totalValue);
+    printf("  Tempo: %ld\n", sellsToRegister[i].sellDate);
 
-    fprintf(file, "%s %s %d %1.2f %1.2f\n", sellsToRegister[i].productName,
+    fprintf(file, "%s %s %d %1.2f %1.2f %ld\n", sellsToRegister[i].productName,
             sellsToRegister[i].productBrand, sellsToRegister[i].quantity,
-            sellsToRegister[i].unitValue, sellsToRegister[i].totalValue);
+            sellsToRegister[i].unitValue, sellsToRegister[i].totalValue,
+            sellsToRegister[i].sellDate);
   }
 
   fclose(file);
@@ -47,6 +51,7 @@ void registerNewSell() {
     itemsSelledCount++;
 
     struct Sell newSell;
+    newSell.sellDate = time(NULL);
 
     printf("\nDigite o nome do produto: ");
     scanf("%s", newSell.productName);
@@ -84,7 +89,6 @@ void registerNewSell() {
   }
 
   printf("\nSalvando..\n");
-
   insertNewSell(itemsSelled, itemsSelledCount);
 }
 
