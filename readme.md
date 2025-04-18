@@ -9,8 +9,8 @@ roupas, imprimindo no final do dia, uma série de relatórios.
 
 | Nome              | Matrícula      |
 |-------------------|----------------|
-| Itallo Vidal      | 1230114462    |
-| Maria Eduarda     | 1240107648    |
+| Itallo Vidal      | 1230114462     |
+| Maria Eduarda     | 1240107648     |
 
 # Requisitos Funcionais:
 ### [ ✅ ] **Cadastro de Vendas:** 

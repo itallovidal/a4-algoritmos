@@ -3,6 +3,8 @@
 #include <string.h>
 #include <time.h>
 
+#define SELL_FILE_PATH "data/sell.txt"
+
 struct Sell {
   // char id[10]; // TODO fazer funcão que gera UUID
   char productName[50];
@@ -13,12 +15,52 @@ struct Sell {
   time_t sellDate;
 };
 
-void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
-  char filePath[20] = "data/sell.txt";
-  FILE *file = fopen(filePath, "a");
+void getSelledProducts(struct Sell *selledProducts, int *selledProductsCount) {
+  FILE *file = fopen(SELL_FILE_PATH, "r");
 
   if (file == NULL) {
-    printf("\nErro ao abrir o arquivo %s\n", filePath);
+    return;
+  }
+
+  while (fscanf(file, "%s %s %d %f %f %ld",
+                selledProducts[*selledProductsCount].productName,
+                selledProducts[*selledProductsCount].productBrand,
+                &selledProducts[*selledProductsCount].quantity,
+                &selledProducts[*selledProductsCount].unitValue,
+                &selledProducts[*selledProductsCount].totalValue,
+                &selledProducts[*selledProductsCount].sellDate) != EOF) {
+
+    (*selledProductsCount)++;
+    if (*selledProductsCount != 0 && *selledProductsCount % 10 == 0) {
+      selledProducts = realloc(selledProducts, sizeof(struct Sell) * 10);
+    }
+  }
+}
+
+void showSelledProducts() {
+  int selledProductsCount = 0;
+  struct Sell *selledProducts = malloc(sizeof(struct Sell) * 10);
+
+  getSelledProducts(selledProducts, &selledProductsCount);
+
+  printf("Quantidade de registros: %d", selledProductsCount);
+
+  for (int i = 0; i < selledProductsCount; i++) {
+    printf("Produto:\n");
+    printf("  Nome: %s\n", selledProducts[i].productName);
+    printf("  Marca: %s\n", selledProducts[i].productBrand);
+    printf("  Quantidade: %d\n", selledProducts[i].quantity);
+    printf("  Unit: %.2f\n", selledProducts[i].unitValue);
+    printf("  Total: %.2f\n", selledProducts[i].totalValue);
+    printf("  Tempo: %ld\n", selledProducts[i].sellDate);
+  }
+}
+
+void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
+  FILE *file = fopen(SELL_FILE_PATH, "a");
+
+  if (file == NULL) {
+    printf("\nErro ao abrir o arquivo %s\n", SELL_FILE_PATH);
     return;
   }
 
@@ -113,6 +155,7 @@ int main() {
       registerNewSell();
       break;
     case 2:
+      showSelledProducts();
       break;
     case 3:
       break;
