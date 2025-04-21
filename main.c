@@ -1,17 +1,24 @@
 #include "sales_dao.h"
 
 void printProducts(struct Sale *soldProducts, int soldProductsCount) {
-  printf("Quantidade de registros: %d", soldProductsCount);
+  int itensCount = 0;
+
+  printf("nome | marca | quantidade | Valor unitário | total | Data\n\n");
 
   for (int i = 0; i < soldProductsCount; i++) {
-    printf("Product:\n");
-    printf("  Nome: %s\n", soldProducts[i].productName);
-    printf("  Marca: %s\n", soldProducts[i].productBrand);
-    printf("  Quantidade: %d\n", soldProducts[i].quantity);
-    printf("  Valor unitário: %.2f\n", soldProducts[i].unitValue);
-    printf("  Total: %.2f\n", soldProducts[i].totalValue);
-    printf("  Data de venda: %ld\n", soldProducts[i].saleDate);
+    printf("%s ", soldProducts[i].productName);
+    printf("| %s ", soldProducts[i].productBrand);
+    printf("| %d ", soldProducts[i].quantity);
+    printf("| %.2f ", soldProducts[i].unitValue);
+    printf("| %.2f ", soldProducts[i].totalValue);
+    printf("| %ld", soldProducts[i].saleDate);
+    printf("\n");
+
+    itensCount += soldProducts[i].quantity;
   }
+
+  printf("\nQuantidade total de vendas: %d \n", soldProductsCount);
+  printf("\nQuantidade total de itens: %d \n", itensCount);
 }
 
 void showSoldProducts() {
@@ -75,7 +82,7 @@ void registerNewSale() {
 void salesReport() {
   struct DateToSearch dateToSearch;
 
-  printf("Digite o Dia abaixo para listar o relatório:\n");
+  printf("\nDigite o Dia abaixo para listar o relatório:\n");
   printf("Padrão da data: dd/mm -> ");
   char input[30];
   scanf("%s", input);
