@@ -15,9 +15,16 @@ struct Sale {
   time_t saleDate;
 };
 
+struct DateToSearch {
+  int day;
+  int month;
+};
+
 #define SELL_FILE_PATH "data/sell.txt"
 
 void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
+void getDaySoldProduct(struct Sale *soldProducts, int *soldProductsCount,
+                       struct DateToSearch *dateToSearch);
 void createSale(struct Sale salesToRegister[], int saleCount);
 
 #endif

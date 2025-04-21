@@ -1,11 +1,6 @@
 #include "sales_dao.h"
 
-void showSoldProducts() {
-  int soldProductsCount = 0;
-  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
-
-  getAllSoldProducts(soldProducts, &soldProductsCount);
-
+void printProducts(struct Sale *soldProducts, int soldProductsCount) {
   printf("Quantidade de registros: %d", soldProductsCount);
 
   for (int i = 0; i < soldProductsCount; i++) {
@@ -17,6 +12,14 @@ void showSoldProducts() {
     printf("  Total: %.2f\n", soldProducts[i].totalValue);
     printf("  Data de venda: %ld\n", soldProducts[i].saleDate);
   }
+}
+
+void showSoldProducts() {
+  int soldProductsCount = 0;
+  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
+
+  getAllSoldProducts(soldProducts, &soldProductsCount);
+  printProducts(soldProducts, soldProductsCount);
 }
 
 void registerNewSale() {
@@ -69,6 +72,27 @@ void registerNewSale() {
   createSale(itemsSold, itemsSoldCount);
 }
 
+void salesReport() {
+  struct DateToSearch dateToSearch;
+
+  printf("Digite o Dia abaixo para listar o relatório:\n");
+  printf("Padrão da data: dd/mm -> ");
+  char input[30];
+  scanf("%s", input);
+  sscanf(input, "%d/%d", &dateToSearch.day, &dateToSearch.month);
+  dateToSearch.month -= 1;
+
+  int soldProductsCount = 0;
+  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 50);
+
+  if (soldProducts == NULL) {
+    return;
+  }
+
+  getDaySoldProduct(soldProducts, &soldProductsCount, &dateToSearch);
+  printProducts(soldProducts, soldProductsCount);
+}
+
 int main() {
   int isRunning = 1;
 
@@ -93,6 +117,7 @@ int main() {
       showSoldProducts();
       break;
     case 3:
+      salesReport();
       break;
     case 4:
       isRunning = 0;
