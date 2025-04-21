@@ -1,5 +1,7 @@
 main
 
+.vscode
+
 !*.c
 !*.h
 !*.md
