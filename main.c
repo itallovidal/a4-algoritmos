@@ -4,7 +4,7 @@ void showSoldProducts() {
   int soldProductsCount = 0;
   struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
 
-  getSoldProducts(soldProducts, &soldProductsCount);
+  getAllSoldProducts(soldProducts, &soldProductsCount);
 
   printf("Quantidade de registros: %d", soldProductsCount);
 
@@ -66,7 +66,7 @@ void registerNewSale() {
   }
 
   printf("\nSalvando..\n");
-  insertNewSale(itemsSold, itemsSoldCount);
+  createSale(itemsSold, itemsSoldCount);
 }
 
 int main() {

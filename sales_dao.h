@@ -17,7 +17,7 @@ struct Sale {
 
 #define SELL_FILE_PATH "data/sell.txt"
 
-void getSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
-void insertNewSale(struct Sale salesToRegister[], int saleCount);
+void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
+void createSale(struct Sale salesToRegister[], int saleCount);
 
 #endif

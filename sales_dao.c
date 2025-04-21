@@ -1,6 +1,6 @@
 #include "sales_dao.h"
 
-void getSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
+void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
 
   FILE *file = fopen(SELL_FILE_PATH, "r");
 
@@ -23,7 +23,7 @@ void getSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
   }
 }
 
-void insertNewSale(struct Sale salesToRegister[], int saleCount) {
+void createSale(struct Sale salesToRegister[], int saleCount) {
   FILE *file = fopen(SELL_FILE_PATH, "a");
 
   if (file == NULL) {
