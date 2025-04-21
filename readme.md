@@ -32,8 +32,8 @@ Registrar os seguintes dados por venda realizada:
    - O programa deve calcular automaticamente o número de clientes que realizaram compras em uma determinada data.
 
 ### [ ❌ ] **Relatórios Gerenciais (por data):**
-   - Quantidade total de itens vendidos no dia (ao finalizar cada venda).
    - Lista de todas as vendas realizadas na data, **em ordem decrescente de valor**.
+   - Quantidade total de itens vendidos no dia (ao finalizar cada venda).
    - Faturamento bruto diário das vendas realizadas na data.
    - Quantidade de clientes que compraram na data.
    - Item mais vendido na data.

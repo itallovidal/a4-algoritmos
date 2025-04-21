@@ -116,7 +116,7 @@ void registerNewSell() {
 
     printf("\n\nDeseja registrar a venda de mais um produto?");
     printf("\n1 - Sim");
-    printf("\nOutro - Não");
+    printf("\n2 - Não");
     printf("\n");
     scanf("%d", &isAddingProduct);
 
