@@ -67,7 +67,7 @@ Registrar os seguintes dados por venda realizada:
 
 Compila o programa:
 ```bash
-gcc main.c -o main
+gcc main.c sales_dao.c -o main
 ```
 
 Roda o programa:
