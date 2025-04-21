@@ -5,17 +5,17 @@
 
 #define SELL_FILE_PATH "data/sell.txt"
 
-struct Sell {
-  // char id[10]; // TODO fazer funcão que gera UUID
+struct Sale {
+  // char id[10]; // TODO: gerar UUID
   char productName[50];
   char productBrand[50];
   int quantity;
   float unitValue;
   float totalValue;
-  time_t sellDate;
+  time_t saleDate;
 };
 
-void getSelledProducts(struct Sell *selledProducts, int *selledProductsCount) {
+void getSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
   FILE *file = fopen(SELL_FILE_PATH, "r");
 
   if (file == NULL) {
@@ -23,40 +23,40 @@ void getSelledProducts(struct Sell *selledProducts, int *selledProductsCount) {
   }
 
   while (fscanf(file, "%s %s %d %f %f %ld",
-                selledProducts[*selledProductsCount].productName,
-                selledProducts[*selledProductsCount].productBrand,
-                &selledProducts[*selledProductsCount].quantity,
-                &selledProducts[*selledProductsCount].unitValue,
-                &selledProducts[*selledProductsCount].totalValue,
-                &selledProducts[*selledProductsCount].sellDate) != EOF) {
+                soldProducts[*soldProductsCount].productName,
+                soldProducts[*soldProductsCount].productBrand,
+                &soldProducts[*soldProductsCount].quantity,
+                &soldProducts[*soldProductsCount].unitValue,
+                &soldProducts[*soldProductsCount].totalValue,
+                &soldProducts[*soldProductsCount].saleDate) != EOF) {
 
-    (*selledProductsCount)++;
-    if (*selledProductsCount != 0 && *selledProductsCount % 10 == 0) {
-      selledProducts = realloc(selledProducts, sizeof(struct Sell) * 10);
+    (*soldProductsCount)++;
+    if (*soldProductsCount != 0 && *soldProductsCount % 10 == 0) {
+      soldProducts = realloc(soldProducts, sizeof(struct Sale) * 10);
     }
   }
 }
 
-void showSelledProducts() {
-  int selledProductsCount = 0;
-  struct Sell *selledProducts = malloc(sizeof(struct Sell) * 10);
+void showSoldProducts() {
+  int soldProductsCount = 0;
+  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
 
-  getSelledProducts(selledProducts, &selledProductsCount);
+  getSoldProducts(soldProducts, &soldProductsCount);
 
-  printf("Quantidade de registros: %d", selledProductsCount);
+  printf("Quantidade de registros: %d", soldProductsCount);
 
-  for (int i = 0; i < selledProductsCount; i++) {
-    printf("Produto:\n");
-    printf("  Nome: %s\n", selledProducts[i].productName);
-    printf("  Marca: %s\n", selledProducts[i].productBrand);
-    printf("  Quantidade: %d\n", selledProducts[i].quantity);
-    printf("  Unit: %.2f\n", selledProducts[i].unitValue);
-    printf("  Total: %.2f\n", selledProducts[i].totalValue);
-    printf("  Tempo: %ld\n", selledProducts[i].sellDate);
+  for (int i = 0; i < soldProductsCount; i++) {
+    printf("Product:\n");
+    printf("  Nome: %s\n", soldProducts[i].productName);
+    printf("  Marca: %s\n", soldProducts[i].productBrand);
+    printf("  Quantidade: %d\n", soldProducts[i].quantity);
+    printf("  Valor unitário: %.2f\n", soldProducts[i].unitValue);
+    printf("  Total: %.2f\n", soldProducts[i].totalValue);
+    printf("  Data de venda: %ld\n", soldProducts[i].saleDate);
   }
 }
 
-void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
+void insertNewSale(struct Sale salesToRegister[], int saleCount) {
   FILE *file = fopen(SELL_FILE_PATH, "a");
 
   if (file == NULL) {
@@ -64,54 +64,53 @@ void insertNewSell(struct Sell sellsToRegister[], int sellCount) {
     return;
   }
 
-  for (int i = 0; i < sellCount; i++) {
+  for (int i = 0; i < saleCount; i++) {
+    printf("Product:\n");
+    printf("  Nome: %s\n", salesToRegister[i].productName);
+    printf("  Marca: %s\n", salesToRegister[i].productBrand);
+    printf("  Quantidade: %d\n", salesToRegister[i].quantity);
+    printf("  Valor unitário: %.2f\n", salesToRegister[i].unitValue);
+    printf("  Total: %.2f\n", salesToRegister[i].totalValue);
+    printf("  Data de venda: %ld\n", salesToRegister[i].saleDate);
 
-    printf("Produto:\n");
-    printf("  Nome: %s\n", sellsToRegister[i].productName);
-    printf("  Marca: %s\n", sellsToRegister[i].productBrand);
-    printf("  Quantidade: %d\n", sellsToRegister[i].quantity);
-    printf("  Unit: %.2f\n", sellsToRegister[i].unitValue);
-    printf("  Total: %.2f\n", sellsToRegister[i].totalValue);
-    printf("  Tempo: %ld\n", sellsToRegister[i].sellDate);
-
-    fprintf(file, "%s %s %d %1.2f %1.2f %ld\n", sellsToRegister[i].productName,
-            sellsToRegister[i].productBrand, sellsToRegister[i].quantity,
-            sellsToRegister[i].unitValue, sellsToRegister[i].totalValue,
-            sellsToRegister[i].sellDate);
+    fprintf(file, "%s %s %d %1.2f %1.2f %ld\n", salesToRegister[i].productName,
+            salesToRegister[i].productBrand, salesToRegister[i].quantity,
+            salesToRegister[i].unitValue, salesToRegister[i].totalValue,
+            salesToRegister[i].saleDate);
   }
 
   fclose(file);
   printf("\nVenda registrada com sucesso!\n");
 }
 
-void registerNewSell() {
+void registerNewSale() {
   int isAddingProduct = 1;
-  struct Sell *itemsSelled = NULL;
-  int itemsSelledCount = 0;
+  struct Sale *itemsSold = NULL;
+  int itemsSoldCount = 0;
 
   while (isAddingProduct) {
-    itemsSelledCount++;
+    itemsSoldCount++;
 
-    struct Sell newSell;
-    newSell.sellDate = time(NULL);
+    struct Sale newSale;
+    newSale.saleDate = time(NULL);
 
     printf("\nDigite o nome do produto: ");
-    scanf("%s", newSell.productName);
+    scanf("%s", newSale.productName);
 
     printf("\nDigite a marca do produto: ");
-    scanf("%s", newSell.productBrand);
+    scanf("%s", newSale.productBrand);
 
     printf("\nDigite a quantidade vendida: ");
-    scanf("%d", &newSell.quantity);
+    scanf("%d", &newSale.quantity);
 
     printf("\nDigite o valor unitário: ");
-    scanf("%f", &newSell.unitValue);
+    scanf("%f", &newSale.unitValue);
 
-    newSell.totalValue = newSell.unitValue * newSell.quantity;
+    newSale.totalValue = newSale.unitValue * newSale.quantity;
 
-    if (newSell.quantity > 3) {
+    if (newSale.quantity > 3) {
       printf("\nAplicando desconto..");
-      newSell.totalValue = newSell.totalValue * 0.9;
+      newSale.totalValue = newSale.totalValue * 0.9;
     }
 
     printf("\n\nDeseja registrar a venda de mais um produto?");
@@ -124,14 +123,14 @@ void registerNewSell() {
       isAddingProduct = 0;
     }
 
-    itemsSelled = (struct Sell *)realloc(itemsSelled, sizeof(struct Sell) *
-                                                          itemsSelledCount);
+    itemsSold =
+        (struct Sale *)realloc(itemsSold, sizeof(struct Sale) * itemsSoldCount);
 
-    itemsSelled[itemsSelledCount - 1] = newSell;
+    itemsSold[itemsSoldCount - 1] = newSale;
   }
 
   printf("\nSalvando..\n");
-  insertNewSell(itemsSelled, itemsSelledCount);
+  insertNewSale(itemsSold, itemsSoldCount);
 }
 
 int main() {
@@ -152,10 +151,10 @@ int main() {
 
     switch (option) {
     case 1:
-      registerNewSell();
+      registerNewSale();
       break;
     case 2:
-      showSelledProducts();
+      showSoldProducts();
       break;
     case 3:
       break;
