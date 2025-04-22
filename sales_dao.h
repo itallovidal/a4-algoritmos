@@ -5,12 +5,15 @@
 #include <string.h>
 #include <time.h>
 
-struct Sale {
-  // char id[10]; // TODO: gerar UUID
-  char productName[50];
-  char productBrand[50];
+struct SaleProductData {
+  int productID;
   int quantity;
-  float unitValue;
+};
+
+struct Sale {
+  int id;
+  struct SaleProductData *products;
+  int totalProducts;
   float totalValue;
   time_t saleDate;
 };
@@ -20,11 +23,15 @@ struct DateToSearch {
   int month;
 };
 
-#define SELL_FILE_PATH "data/sell.txt"
+struct SaleList {
+  struct Sale *sale;
+  int count;
+};
+
+#define SELL_FILE_PATH "data/sales.txt"
 
 void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
-void getDaySoldProduct(struct Sale *soldProducts, int *soldProductsCount,
-                       struct DateToSearch *dateToSearch);
-void createSale(struct Sale salesToRegister[], int saleCount);
+struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
+void createSale(struct Sale *sale, int productCount);
 
 #endif

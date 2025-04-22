@@ -1,85 +1,92 @@
+#include "products_dao.h"
 #include "sales_dao.h"
 
-void printProducts(struct Sale *soldProducts, int soldProductsCount) {
+void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {
   int itensCount = 0;
 
-  printf("nome | marca | quantidade | Valor unitário | total | Data\n\n");
+  // printf("nome | marca | quantidade | Valor unitário | total | Data\n\n");
 
-  for (int i = 0; i < soldProductsCount; i++) {
-    printf("%s ", soldProducts[i].productName);
-    printf("| %s ", soldProducts[i].productBrand);
-    printf("| %d ", soldProducts[i].quantity);
-    printf("| %.2f ", soldProducts[i].unitValue);
-    printf("| %.2f ", soldProducts[i].totalValue);
-    printf("| %ld", soldProducts[i].saleDate);
-    printf("\n");
+  // for (int i = 0; i < soldProductsCount; i++) {
+  //   printf("%s ", soldProducts[i].productName);
+  //   printf("| %s ", soldProducts[i].productBrand);
+  //   printf("| %d ", soldProducts[i].quantity);
+  //   printf("| %.2f ", soldProducts[i].unitValue);
+  //   printf("| %.2f ", soldProducts[i].totalValue);
+  //   printf("| %ld", soldProducts[i].saleDate);
+  //   printf("\n");
 
-    itensCount += soldProducts[i].quantity;
-  }
+  //   itensCount += soldProducts[i].quantity;
+  // }
 
-  printf("\nQuantidade total de vendas: %d \n", soldProductsCount);
-  printf("\nQuantidade total de itens: %d \n", itensCount);
+  // printf("\nQuantidade total de vendas: %d \n", soldProductsCount);
+  // printf("\nQuantidade total de itens: %d \n", itensCount);
 }
 
-void showSoldProducts() {
-  int soldProductsCount = 0;
-  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
+// void showSoldProducts() {
+//   int soldProductsCount = 0;
+//   struct Sale *soldProducts = malloc(sizeof(struct Sale) * 10);
 
-  getAllSoldProducts(soldProducts, &soldProductsCount);
-  printProducts(soldProducts, soldProductsCount);
-}
+//   getAllSoldProducts(soldProducts, &soldProductsCount);
+//   printSalesProducts(soldProducts, soldProductsCount);
+// }
 
 void registerNewSale() {
+  struct ProductList productList = getAllproducts();
   int isAddingProduct = 1;
-  struct Sale *itemsSold = NULL;
-  int itemsSoldCount = 0;
+
+  struct Sale sale;
+  sale.products = malloc(sizeof(struct SaleProductData) * 20);
+  sale.totalProducts = 0;
 
   while (isAddingProduct) {
-    itemsSoldCount++;
+    printProducts(&productList);
 
-    struct Sale newSale;
-    newSale.saleDate = time(NULL);
+    int isProductValid = 0;
+    int chosenID;
+    while (!isProductValid) {
+      printf("Escolha um produto por id para acrescentar à venda.\n");
+      scanf("%d", &chosenID);
+      isProductValid = verifyID(&productList, chosenID);
+    }
 
-    printf("\nDigite o nome do produto: ");
-    scanf("%s", newSale.productName);
+    printf("\nQual quantidade vendida deste produto?");
+    scanf("%d", &sale.products[sale.totalProducts].quantity);
 
-    printf("\nDigite a marca do produto: ");
-    scanf("%s", newSale.productBrand);
+    sale.products[sale.totalProducts].productID = chosenID;
+    sale.id = time(NULL) / 1000;
+    sale.saleDate = time(NULL);
+    sale.totalProducts++;
+    sale.totalValue = 0;
 
-    printf("\nDigite a quantidade vendida: ");
-    scanf("%d", &newSale.quantity);
-
-    printf("\nDigite o valor unitário: ");
-    scanf("%f", &newSale.unitValue);
-
-    newSale.totalValue = newSale.unitValue * newSale.quantity;
-
-    if (newSale.quantity > 3) {
-      printf("\nAplicando desconto..");
-      newSale.totalValue = newSale.totalValue * 0.9;
+    for (int i = 0; i < productList.count; i++) {
+      if (productList.product[i].id == chosenID) {
+        sale.totalValue +=
+            productList.product[i].price * sale.products->quantity;
+        break;
+      }
     }
 
     printf("\n\nDeseja registrar a venda de mais um produto?");
     printf("\n1 - Sim");
-    printf("\n2 - Não");
+    printf("\nOutra tecla - Não");
     printf("\n");
     scanf("%d", &isAddingProduct);
 
     if (isAddingProduct != 1) {
       isAddingProduct = 0;
     }
+  }
 
-    itemsSold =
-        (struct Sale *)realloc(itemsSold, sizeof(struct Sale) * itemsSoldCount);
-
-    itemsSold[itemsSoldCount - 1] = newSale;
+  if (sale.totalProducts >= 3) {
+    printf("Desconto sendo aplicado!");
+    sale.totalValue = sale.totalValue * 0.90;
   }
 
   printf("\nSalvando..\n");
-  createSale(itemsSold, itemsSoldCount);
+  createSale(&sale, sale.totalProducts);
 }
 
-void salesReport() {
+void listAllSalesByDay() {
   struct DateToSearch dateToSearch;
 
   printf("\nDigite o Dia abaixo para listar o relatório:\n");
@@ -88,31 +95,47 @@ void salesReport() {
   scanf("%s", input);
   sscanf(input, "%d/%d", &dateToSearch.day, &dateToSearch.month);
   dateToSearch.month -= 1;
+  struct SaleList saleList = getSalesByDay(&dateToSearch);
 
-  int soldProductsCount = 0;
-  struct Sale *soldProducts = malloc(sizeof(struct Sale) * 50);
+  printf("\nTotal de vendas nesse dia: %d\n", saleList.count);
+  printf("-------//------\n");
 
-  if (soldProducts == NULL) {
-    return;
+  for (int i = 0; i < saleList.count; i++) {
+    printf("ID da venda: %d\n", saleList.sale[i].id);
+    printf("Quantidade de produtos diferentes comprados: %d\n",
+           saleList.sale[i].totalProducts);
+    printf("Valor Total da venda: %1.2f\n", saleList.sale[i].totalValue);
+    printf("Itens comprados:\n");
+    printf("id do produto | quantidade\n");
+
+    for (int j = 0; j < saleList.sale[i].totalProducts; i++) {
+      printf("%03d |", saleList.sale[i].products[j].productID);
+      printf(" %d\n", saleList.sale[i].products[j].quantity);
+    }
   }
 
-  getDaySoldProduct(soldProducts, &soldProductsCount, &dateToSearch);
-  printProducts(soldProducts, soldProductsCount);
+  // printProducts(soldProducts, soldProductsCount);
 }
 
 int main() {
   int isRunning = 1;
+  printf("Bem vindo ao seu sistema de PetShop!");
 
   while (isRunning) {
-    printf("\nBem vindo ao seu sistema de PetShop!");
-    printf("\nO que deseja fazer?");
+    printf("\nMenu->\n");
 
     int option;
-    printf("\n1 - Cadastrar uma nova venda");
-    printf("\n2 - Relatório de itens");
-    printf("\n3 - Relatório de venda");
-    printf("\n4 - Sair");
-    printf("\n");
+    printf("1 - Cadastrar uma nova venda\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("Relatório de Vendas\n");
+    printf("2 - Listagem de vendas no dia X\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("Relatório de Produtos\n");
+    printf("3 - Produtos mais vendido no dia X\n");
+    printf("4 - Produtos menos vendido no dia X\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("5 - Sair\n");
+    printf("-> ");
     scanf("%d", &option);
     printf("\n");
 
@@ -121,10 +144,10 @@ int main() {
       registerNewSale();
       break;
     case 2:
-      showSoldProducts();
+      listAllSalesByDay();
+      // showSoldProducts();
       break;
     case 3:
-      salesReport();
       break;
     case 4:
       isRunning = 0;

@@ -12,62 +12,56 @@ roupas, imprimindo no final do dia, uma série de relatórios.
 | Itallo Vidal      | 1230114462     |
 | Maria Eduarda     | 1240107648     |
 
-# Requisitos Funcionais:
-### [ ✅ ] **Cadastro de Vendas:** 
-Registrar os seguintes dados por venda realizada:
-- Código do item
-- Nome do item
-- Marca do item
-- Quantidade de itens
-- Preço unitário do item
-- Total da venda
-
-### [ ✅ ] **Cálculo do Valor Total da Venda:**
-   - Após cada entrada de novo item, o programa deve chamar uma função para calcular automaticamente o valor total da venda.
-
-### [ ✅ ] **Desconto Condicional:**
-   - Aplicar automaticamente **10% de desconto** no valor total da venda quando a quantidade for **maior ou igual a 3 unidades**.
-
-### [ ❌ ] **Cálculo de Clientes por Dia:**
-   - O programa deve calcular automaticamente o número de clientes que realizaram compras em uma determinada data.
-
-### [ ❌ ] **Relatórios Gerenciais (por data):**
-   - Lista de todas as vendas realizadas na data, **em ordem decrescente de valor**.
-   - Quantidade total de itens vendidos no dia (ao finalizar cada venda).
-   - Faturamento bruto diário das vendas realizadas na data.
-   - Quantidade de clientes que compraram na data.
-   - Item mais vendido na data.
-   - Item menos vendido na data.
-
-### **Encerramento do Programa:**
-   - O programa deverá ser encerrado ao final do dia (quando não houver novos clientes), gerando os relatórios acima.
 
 # Requisitos Não - Funcionais:
+✅ Cadastrar os seguintes dados por venda realizada: 
+  - código do item, 
+  - nome do item, 
+  - marca do item, 
+  - quantidade de itens,
+  - preço unitário do item;
+
+✅ O programa deverá atribuir um desconto de 10% do valor total da venda realizada para
+cada item, sempre que a quantidade de itens vendidos for maior ou igual a três unidades;
+
+✅ Após cada entrada de novo item, o programa deverá chamar uma função para calcular
+automaticamente o preço pago na venda realizada para cada item registrado;
+
+❌ Item mais vendido em uma determinada data informada pelo usuário;
+
+
+❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
+❌ Listar todas as vendas realizadas no dia, em ordem decrescente, ou seja, considerar a venda de maior valor prioritariamente, e assim por diante, até que todas sejam listadas. O usuário informará a data da venda;
+❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
+❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
+
+❌ Item menos vendido em uma determinada data informada pelo usuário.
+
+❌ O programa também deverá calcular automaticamente a quantidade de clientes que
+realizaram compras naquele dia.
+❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim
+que finalizar aquela venda específica;
+❌ Listar todas as vendas realizadas no dia, em ordem decrescente, ou seja, considerar a
+venda de maior valor prioritariamente, e assim por diante, até que todas sejam listadas.
+O usuário informará a data da venda;
+❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
+❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
 
 **Linguagem de Programação:**
    - O sistema deve ser desenvolvido utilizando **Linguagem C**.
-
-2. **Usabilidade:**
    - O programa deve permitir que o **usuário informe uma data** para consultar os relatórios.
-
-3. **Organização e Modularidade:**
    - O código deve ser organizado em funções para:
      - Cálculo de valor total
      - Aplicação de desconto
      - Geração de relatórios
      - Contagem de clientes, etc.
-
-4. **Eficiência:**
-   - As vendas devem ser ordenadas de forma eficiente para exibição decrescente por valor.
-
-5. **Persistência Temporária:**
    - As informações devem ser armazenadas em **memória** durante a execução do programa, até a finalização do dia.
 
 # Comandos úteis
 
 Compila o programa:
 ```bash
-gcc main.c sales_dao.c -o main
+gcc main.c sales_dao.c products_dao -o main
 ```
 
 Roda o programa:

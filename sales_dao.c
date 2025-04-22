@@ -1,52 +1,96 @@
 #include "sales_dao.h"
 
-void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
+// void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
+//   FILE *file = fopen(SELL_FILE_PATH, "r");
+
+//   if (file == NULL) {
+//     return;
+//   }
+
+//   while (fscanf(file, "%s %s %d %f %f %ld",
+//                 soldProducts[*soldProductsCount].productName,
+//                 soldProducts[*soldProductsCount].productBrand,
+//                 &soldProducts[*soldProductsCount].quantity,
+//                 &soldProducts[*soldProductsCount].unitValue,
+//                 &soldProducts[*soldProductsCount].totalValue,
+//                 &soldProducts[*soldProductsCount].saleDate) != EOF) {
+
+//     (*soldProductsCount)++;
+//   }
+
+//   fclose(file);
+// }
+
+struct SaleRow {
+  int id;
+  int productID;
+  int productCount;
+  int totalProductCount;
+  float totalSaleValue;
+  time_t saleDate;
+};
+
+struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
   FILE *file = fopen(SELL_FILE_PATH, "r");
+  struct SaleList saleList;
+  saleList.sale = malloc(sizeof(struct Sale) * 20);
+
+  if (saleList.sale == NULL) {
+    return saleList;
+  }
 
   if (file == NULL) {
-    return;
+    return saleList;
   }
 
-  while (fscanf(file, "%s %s %d %f %f %ld",
-                soldProducts[*soldProductsCount].productName,
-                soldProducts[*soldProductsCount].productBrand,
-                &soldProducts[*soldProductsCount].quantity,
-                &soldProducts[*soldProductsCount].unitValue,
-                &soldProducts[*soldProductsCount].totalValue,
-                &soldProducts[*soldProductsCount].saleDate) != EOF) {
+  struct SaleRow row;
 
-    (*soldProductsCount)++;
-  }
+  saleList.count = 0;
 
-  fclose(file);
-}
+  int previousSaleID = 0;
+  int currentSale = 0;
+  while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
+                &row.productCount, &row.totalProductCount, &row.totalSaleValue,
+                &row.saleDate) == 6) {
 
-void getDaySoldProduct(struct Sale *soldProducts, int *soldProductsCount,
-                       struct DateToSearch *dateToSearch) {
-  FILE *file = fopen(SELL_FILE_PATH, "r");
-
-  if (file == NULL) {
-    return;
-  }
-
-  struct Sale sale;
-  while (fscanf(file, "%s %s %d %f %f %ld", sale.productName, sale.productBrand,
-                &sale.quantity, &sale.unitValue, &sale.totalValue,
-                &sale.saleDate) == 6) {
-
-    struct tm *formattedDate = gmtime(&sale.saleDate);
+    struct tm *formattedDate = gmtime(&row.saleDate);
 
     if (formattedDate->tm_mday == dateToSearch->day &&
         formattedDate->tm_mon == dateToSearch->month) {
-      soldProducts[*soldProductsCount] = sale;
-      (*soldProductsCount)++;
+
+      if (previousSaleID != row.id) {
+        saleList.count++;
+        previousSaleID = row.id;
+        currentSale = 0;
+
+        saleList.sale[saleList.count - 1].products =
+            malloc(sizeof(struct SaleProductData) * 20);
+
+        saleList.sale[saleList.count - 1].id = row.id;
+        saleList.sale[saleList.count - 1].products[currentSale].productID =
+            row.productID;
+        saleList.sale[saleList.count - 1].products[currentSale].quantity =
+            row.productCount;
+        saleList.sale[saleList.count - 1].saleDate = row.saleDate;
+        saleList.sale[saleList.count - 1].totalProducts = row.totalProductCount;
+        saleList.sale[saleList.count - 1].totalValue = row.totalSaleValue;
+        currentSale++;
+        continue;
+      }
+
+      saleList.sale[saleList.count - 1].products[currentSale].productID =
+          row.productID;
+      saleList.sale[saleList.count - 1].products[currentSale].quantity =
+          row.productCount;
+      currentSale++;
     }
   }
 
   fclose(file);
+  return saleList;
 }
 
-void createSale(struct Sale salesToRegister[], int saleCount) {
+void createSale(struct Sale *sale, int productCount) {
   FILE *file = fopen(SELL_FILE_PATH, "a");
 
   if (file == NULL) {
@@ -54,19 +98,10 @@ void createSale(struct Sale salesToRegister[], int saleCount) {
     return;
   }
 
-  for (int i = 0; i < saleCount; i++) {
-    printf("Product:\n");
-    printf("  Nome: %s\n", salesToRegister[i].productName);
-    printf("  Marca: %s\n", salesToRegister[i].productBrand);
-    printf("  Quantidade: %d\n", salesToRegister[i].quantity);
-    printf("  Valor unitário: %.2f\n", salesToRegister[i].unitValue);
-    printf("  Total: %.2f\n", salesToRegister[i].totalValue);
-    printf("  Data de venda: %ld\n", salesToRegister[i].saleDate);
-
-    fprintf(file, "%s %s %d %1.2f %1.2f %ld\n", salesToRegister[i].productName,
-            salesToRegister[i].productBrand, salesToRegister[i].quantity,
-            salesToRegister[i].unitValue, salesToRegister[i].totalValue,
-            salesToRegister[i].saleDate);
+  for (int i = 0; i < productCount; i++) {
+    fprintf(file, "%d %03d %d %d %1.2f %ld\n", sale->id,
+            sale->products[i].productID, sale->products[i].quantity,
+            sale->totalProducts, sale->totalValue, sale->saleDate);
   }
 
   fclose(file);

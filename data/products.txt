@@ -1,0 +1,11 @@
+001 Ração_Premium_Cães_Adultos Golden 89.90  
+002 Areia_Higiênica_Gatos Pipicat 34.50  
+003 Coleira_Antipulgas Seresto 45.00  
+004 Brinquedo_Bola_Borracha Kong 19.99  
+005 Shampoo_Pelagem_Branca Pet_Society 27.80  
+006 Comedouro_Inox_Médio Chalesco 22.50  
+007 Ração_Seca_Gatos_Filhotes Whiskas 74.20  
+008 Ossinho_Mastigável Bomguy 12.00  
+009 Caixa_Transporte_Pequena Plast_Pet 115.00  
+010 Tapete_Higiênico_30un SuperSecão 58.90  
+
