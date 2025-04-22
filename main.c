@@ -98,17 +98,17 @@ void listAllSalesByDay() {
   struct SaleList saleList = getSalesByDay(&dateToSearch);
 
   printf("\nTotal de vendas nesse dia: %d\n", saleList.count);
-  printf("-------//------\n");
 
   for (int i = 0; i < saleList.count; i++) {
+    printf("------------------\n");
     printf("ID da venda: %d\n", saleList.sale[i].id);
     printf("Quantidade de produtos diferentes comprados: %d\n",
            saleList.sale[i].totalProducts);
     printf("Valor Total da venda: %1.2f\n", saleList.sale[i].totalValue);
-    printf("Itens comprados:\n");
-    printf("id do produto | quantidade\n");
+    printf("\nItens comprados:\n");
+    printf(" id | qtd\n");
 
-    for (int j = 0; j < saleList.sale[i].totalProducts; i++) {
+    for (int j = 0; j < saleList.sale[i].totalProducts; j++) {
       printf("%03d |", saleList.sale[i].products[j].productID);
       printf(" %d\n", saleList.sale[i].products[j].quantity);
     }

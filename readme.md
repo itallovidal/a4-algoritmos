@@ -27,16 +27,16 @@ cada item, sempre que a quantidade de itens vendidos for maior ou igual a três 
 ✅ Após cada entrada de novo item, o programa deverá chamar uma função para calcular
 automaticamente o preço pago na venda realizada para cada item registrado;
 
+🟣 Listar todas as vendas realizadas no dia:
+  ✅ Capturar todas as vendas do dia que o usuário pedir 
+  ✅ Listar as vendas capturadas;
+  -  Colocar o vetor em ordem decrescente (considerar a venda de maior valor prioritariamente)
+
 ❌ Item mais vendido em uma determinada data informada pelo usuário;
-
-
 ❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
-❌ Listar todas as vendas realizadas no dia, em ordem decrescente, ou seja, considerar a venda de maior valor prioritariamente, e assim por diante, até que todas sejam listadas. O usuário informará a data da venda;
 ❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
-
 ❌ Item menos vendido em uma determinada data informada pelo usuário.
-
 ❌ O programa também deverá calcular automaticamente a quantidade de clientes que
 realizaram compras naquele dia.
 ❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim
@@ -61,7 +61,7 @@ O usuário informará a data da venda;
 
 Compila o programa:
 ```bash
-gcc main.c sales_dao.c products_dao -o main
+gcc main.c sales_dao.c products_dao.c -o main
 ```
 
 Roda o programa:
