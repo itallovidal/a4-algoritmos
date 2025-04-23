@@ -28,8 +28,23 @@ struct SaleList {
   int count;
 };
 
+struct SaleRow {
+  int id;
+  int productID;
+  int productCount;
+  int totalProductCount;
+  float totalSaleValue;
+  time_t saleDate;
+};
+
+struct SaleRowList {
+  struct SaleRow *saleRow;
+  int count;
+};
+
 #define SELL_FILE_PATH "data/sales.txt"
 
+struct SaleRowList getSaleRegistersByDay(struct DateToSearch *dateToSearch);
 void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
 struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
 void createSale(struct Sale *sale, int productCount);

@@ -21,14 +21,46 @@
 //   fclose(file);
 // }
 
-struct SaleRow {
-  int id;
-  int productID;
-  int productCount;
-  int totalProductCount;
-  float totalSaleValue;
-  time_t saleDate;
-};
+struct SaleRowList getSaleRegistersByDay(struct DateToSearch *dateToSearch) {
+  FILE *file = fopen(SELL_FILE_PATH, "r");
+  struct SaleRowList saleRowList;
+  saleRowList.saleRow = malloc(sizeof(struct Sale) * 20);
+
+  if (saleRowList.saleRow == NULL) {
+    return saleRowList;
+  }
+
+  if (file == NULL) {
+    return saleRowList;
+  }
+
+  struct SaleRow row;
+
+  saleRowList.count = 0;
+  while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
+                &row.productCount, &row.totalProductCount, &row.totalSaleValue,
+                &row.saleDate) == 6) {
+
+    struct tm *formattedDate = gmtime(&row.saleDate);
+
+    if (formattedDate->tm_mday == dateToSearch->day &&
+        formattedDate->tm_mon == dateToSearch->month) {
+
+      saleRowList.saleRow[saleRowList.count].id = row.id;
+      saleRowList.saleRow[saleRowList.count].productID = row.productID;
+      saleRowList.saleRow[saleRowList.count].productCount = row.productCount;
+      saleRowList.saleRow[saleRowList.count].saleDate = row.saleDate;
+      saleRowList.saleRow[saleRowList.count].totalProductCount =
+          row.totalProductCount;
+      saleRowList.saleRow[saleRowList.count].totalSaleValue =
+          row.totalSaleValue;
+      saleRowList.count++;
+    }
+  }
+
+  fclose(file);
+  return saleRowList;
+}
 
 struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
   FILE *file = fopen(SELL_FILE_PATH, "r");

@@ -1,10 +1,10 @@
 #ifndef PRODUCTS_DAO
 #define PRODUCTS_DAO
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
 struct Product {
   int id;
   char name[50];

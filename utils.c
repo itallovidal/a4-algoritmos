@@ -1,4 +1,61 @@
 #include "utils.h"
+#include "sales_dao.h"
+
+struct Map {
+  int id;
+  int count;
+};
+
+struct Hashmap {
+  struct Map *map;
+  int size;
+};
+
+int getMapIndex(struct Hashmap *hashmap, int id) {
+  for (int i = 0; i < hashmap->size; i++) {
+    if (hashmap->map[i].id == id) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+struct MostSoldProduct getMostSoldProduct(struct SaleRowList *saleRowList) {
+  struct Hashmap hashmap;
+  hashmap.size = 0;
+  hashmap.map = malloc(sizeof(struct Map) * saleRowList->count);
+
+  for (int i = 0; i < saleRowList->count; i++) {
+    printf("produto ID: %03d\n", saleRowList->saleRow[i].productID);
+    int mapIndex = getMapIndex(&hashmap, saleRowList->saleRow[i].productID);
+
+    if (mapIndex == -1) {
+      hashmap.map[hashmap.size].id = saleRowList->saleRow[i].productID;
+      hashmap.map[hashmap.size].count = 1;
+      hashmap.size++;
+    } else {
+      hashmap.map[mapIndex].count++;
+    }
+  }
+
+  int mostSoldProductCount = 0;
+  int mostSoldProductId = -1;
+  for (int j = 0; j < hashmap.size; j++) {
+    if (hashmap.map[j].count > mostSoldProductCount) {
+      mostSoldProductCount = hashmap.map[j].count;
+      mostSoldProductId = hashmap.map[j].id;
+    }
+  }
+
+  free(hashmap.map);
+
+  struct MostSoldProduct mostSoldProduct;
+  mostSoldProduct.id = mostSoldProductId;
+  mostSoldProduct.count = mostSoldProductCount;
+
+  return mostSoldProduct;
+}
 
 struct DateToSearch getDateToSearchInput() {
   struct DateToSearch dateToSearch;
@@ -13,21 +70,21 @@ struct DateToSearch getDateToSearchInput() {
   return dateToSearch;
 }
 
-void printSales(struct SaleList *saleList) {
-  printf("\nTotal de vendas nesse dia: %d\n", saleList->count);
+void printSales(struct SaleList *SaleList) {
+  printf("\nTotal de vendas nesse dia: %d\n", SaleList->count);
 
-  for (int i = 0; i < saleList->count; i++) {
+  for (int i = 0; i < SaleList->count; i++) {
     printf("------------------\n");
-    printf("ID da venda: %d\n", saleList->sale[i].id);
+    printf("ID da venda: %d\n", SaleList->sale[i].id);
     printf("Quantidade de produtos diferentes comprados: %d\n",
-           saleList->sale[i].totalProducts);
-    printf("Valor Total da venda: %1.2f\n", saleList->sale[i].totalValue);
+           SaleList->sale[i].totalProducts);
+    printf("Valor Total da venda: %1.2f\n", SaleList->sale[i].totalValue);
     printf("\nItens comprados:\n");
     printf(" id | qtd\n");
 
-    for (int j = 0; j < saleList->sale[i].totalProducts; j++) {
-      printf("%03d |", saleList->sale[i].products[j].productID);
-      printf(" %d\n", saleList->sale[i].products[j].quantity);
+    for (int j = 0; j < SaleList->sale[i].totalProducts; j++) {
+      printf("%03d |", SaleList->sale[i].products[j].productID);
+      printf(" %d\n", SaleList->sale[i].products[j].quantity);
     }
   }
 }

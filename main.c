@@ -1,6 +1,10 @@
 #include "products_dao.h"
 #include "sales_dao.h"
 #include "utils.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {
   int itensCount = 0;
@@ -93,6 +97,14 @@ void listAllSalesByDay() {
   printSales(&saleList);
 }
 
+void listMostSoldProducts() {
+  struct DateToSearch dateToSearch = getDateToSearchInput();
+  struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
+  struct MostSoldProduct mostSoldProduct = getMostSoldProduct(&saleRowList);
+
+  printf("\nProduto mais vendido: %03d\n", mostSoldProduct.id);
+}
+
 int main() {
   int isRunning = 1;
   printf("Bem vindo ao seu sistema de PetShop!");
@@ -121,9 +133,9 @@ int main() {
       break;
     case 2:
       listAllSalesByDay();
-      // showSoldProducts();
       break;
     case 3:
+      listMostSoldProducts();
       break;
     case 4:
       isRunning = 0;

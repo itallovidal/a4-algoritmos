@@ -32,7 +32,10 @@ automaticamente o preço pago na venda realizada para cada item registrado;
   ✅ Listar as vendas capturadas;
   -  Colocar o vetor em ordem decrescente (considerar a venda de maior valor prioritariamente)
 
-❌ Item mais vendido em uma determinada data informada pelo usuário;
+🟣 Item mais vendido em uma determinada data informada pelo usuário
+ ✅ Pegar o ID do item
+ -  Trocar o ID do item pelo nome
+
 ❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
 ❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
@@ -61,7 +64,7 @@ O usuário informará a data da venda;
 
 Compila o programa:
 ```bash
-gcc main.c sales_dao.c products_dao.c -o main
+gcc main.c sales_dao.c products_dao.c utils.c -o main
 ```
 
 Roda o programa:
