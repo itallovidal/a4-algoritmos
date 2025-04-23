@@ -6,12 +6,13 @@
 #include <string.h>
 #include <time.h>
 
-struct MostSoldProduct {
+struct ProductCountData {
   int id;
   int count;
 };
 
 struct DateToSearch getDateToSearchInput();
-struct MostSoldProduct getMostSoldProduct(struct SaleRowList *saleRowList);
+struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList);
+struct ProductCountData getMostSoldProduct(struct SaleRowList *saleRowList);
 void printSales(struct SaleList *saleList);
 #endif

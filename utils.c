@@ -21,13 +21,12 @@ int getMapIndex(struct Hashmap *hashmap, int id) {
   return -1;
 }
 
-struct MostSoldProduct getMostSoldProduct(struct SaleRowList *saleRowList) {
+struct Hashmap getProductHashmap(struct SaleRowList *saleRowList) {
   struct Hashmap hashmap;
   hashmap.size = 0;
   hashmap.map = malloc(sizeof(struct Map) * saleRowList->count);
 
   for (int i = 0; i < saleRowList->count; i++) {
-    printf("produto ID: %03d\n", saleRowList->saleRow[i].productID);
     int mapIndex = getMapIndex(&hashmap, saleRowList->saleRow[i].productID);
 
     if (mapIndex == -1) {
@@ -38,6 +37,34 @@ struct MostSoldProduct getMostSoldProduct(struct SaleRowList *saleRowList) {
       hashmap.map[mapIndex].count++;
     }
   }
+
+  return hashmap;
+}
+
+struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList) {
+  struct Hashmap hashmap = getProductHashmap(saleRowList);
+
+  int lessSoldProductCount = 99999;
+  int lessSoldProductId = -1;
+  for (int j = 0; j < hashmap.size; j++) {
+    if (hashmap.map[j].count < lessSoldProductCount) {
+      lessSoldProductCount = hashmap.map[j].count;
+      lessSoldProductId = hashmap.map[j].id;
+    }
+  }
+
+  free(hashmap.map);
+
+  struct ProductCountData mostSoldProduct;
+  mostSoldProduct.id = lessSoldProductId;
+  mostSoldProduct.count = lessSoldProductCount;
+
+  return mostSoldProduct;
+}
+
+struct ProductCountData getMostSoldProduct(struct SaleRowList *saleRowList) {
+
+  struct Hashmap hashmap = getProductHashmap(saleRowList);
 
   int mostSoldProductCount = 0;
   int mostSoldProductId = -1;
@@ -50,7 +77,7 @@ struct MostSoldProduct getMostSoldProduct(struct SaleRowList *saleRowList) {
 
   free(hashmap.map);
 
-  struct MostSoldProduct mostSoldProduct;
+  struct ProductCountData mostSoldProduct;
   mostSoldProduct.id = mostSoldProductId;
   mostSoldProduct.count = mostSoldProductCount;
 
