@@ -39,8 +39,8 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 🟣 Item menos vendido em uma determinada data informada pelo usuário
  ✅ Pegar o ID do item
  -  Trocar o ID do item pelo nome
- 
-❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
+
+✅ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 
 ❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
