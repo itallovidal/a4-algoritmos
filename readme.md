@@ -39,19 +39,13 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 🟣 Item menos vendido em uma determinada data informada pelo usuário
  ✅ Pegar o ID do item
  -  Trocar o ID do item pelo nome
+ 
+❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 
 ❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
-❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
 ❌ O programa também deverá calcular automaticamente a quantidade de clientes que
 realizaram compras naquele dia.
-❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim
-que finalizar aquela venda específica;
-❌ Listar todas as vendas realizadas no dia, em ordem decrescente, ou seja, considerar a
-venda de maior valor prioritariamente, e assim por diante, até que todas sejam listadas.
-O usuário informará a data da venda;
-❌ Faturamento bruto diário sob as vendas (o usuário digitará a data);
-❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
 
 **Linguagem de Programação:**
    - O sistema deve ser desenvolvido utilizando **Linguagem C**.

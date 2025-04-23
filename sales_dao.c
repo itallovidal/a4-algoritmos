@@ -79,7 +79,7 @@ struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
 
   saleList.count = 0;
 
-  int previousSaleID = 0;
+  int previousSaleID = -1;
   int currentSale = 0;
   while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
                 &row.productCount, &row.totalProductCount, &row.totalSaleValue,
@@ -112,6 +112,7 @@ struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
 
       saleList.sale[saleList.count - 1].products[currentSale].productID =
           row.productID;
+      saleList.sale[saleList.count - 1].totalValue += row.totalSaleValue;
       saleList.sale[saleList.count - 1].products[currentSale].quantity =
           row.productCount;
       currentSale++;
