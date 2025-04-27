@@ -42,10 +42,9 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 
 ✅ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 
-❌ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
+✅ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
-❌ O programa também deverá calcular automaticamente a quantidade de clientes que
-realizaram compras naquele dia.
+❌ O programa também deverá calcular automaticamente a quantidade de clientes que realizaram compras naquele dia.
 
 **Linguagem de Programação:**
    - O sistema deve ser desenvolvido utilizando **Linguagem C**.

@@ -89,6 +89,16 @@ void registerNewSale() {
 
   printf("\nSalvando..\n");
   createSale(&sale, sale.totalProducts);
+
+  printf("\n-----\n");
+
+  struct tm *formattedDate = gmtime(&sale.saleDate);
+  struct DateToSearch dateToSearch = {
+      .day = formattedDate->tm_mday,
+      .month = formattedDate->tm_mon,
+  };
+  struct SaleList saleList = getSalesByDay(&dateToSearch);
+  printSales(&saleList);
 }
 
 void listAllSalesByDay() {
