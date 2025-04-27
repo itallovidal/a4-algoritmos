@@ -34,11 +34,11 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 
 🟣 Item mais vendido em uma determinada data informada pelo usuário
  ✅ Pegar o ID do item
- -  Trocar o ID do item pelo nome
+ ✅ Trocar o ID do item pelo nome
 
 🟣 Item menos vendido em uma determinada data informada pelo usuário
  ✅ Pegar o ID do item
- -  Trocar o ID do item pelo nome
+ ✅ Trocar o ID do item pelo nome
 
 ✅ Faturamento bruto diário sob as vendas (o usuário digitará a data);
 
