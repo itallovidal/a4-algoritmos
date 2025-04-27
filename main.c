@@ -101,7 +101,9 @@ void listMostSoldProducts() {
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
   struct ProductCountData mostSoldProduct = getMostSoldProduct(&saleRowList);
-  printf("\nProduto mais vendido: %03d\n", mostSoldProduct.id);
+
+  struct Product product = getProductByID(mostSoldProduct.id);
+  printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
 }
 
 void getRevenueByDay() {
@@ -124,7 +126,9 @@ void listLessSoldProducts() {
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
   struct ProductCountData lessSoldProduct = getLessSoldProduct(&saleRowList);
-  printf("\nProduto menos vendido: %03d\n", lessSoldProduct.id);
+  
+  struct Product product = getProductByID(lessSoldProduct.id);
+  printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
 }
 
 int main() {

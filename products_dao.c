@@ -27,6 +27,16 @@ struct ProductList getAllproducts() {
   return list;
 }
 
+struct Product getProductByID(int id) {
+  struct ProductList productList = getAllproducts();
+  for (int i = 0; i < productList.count; i++) {
+    if (productList.product[i].id == id) {
+      return productList.product[i];
+      break;
+    }
+  }
+}
+
 void printProducts(struct ProductList *productList) {
   printf("Tabela de produtos:\n");
   printf("id | nome | marca | valor\n");

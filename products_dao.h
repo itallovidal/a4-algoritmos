@@ -21,7 +21,7 @@ struct ProductList {
 #define PRODUCT_LIST_PATH "data/products.txt"
 
 struct ProductList getAllproducts();
+struct Product getProductByID(int id);
 void printProducts(struct ProductList *productList);
 int verifyID(struct ProductList *productList, int id);
-
 #endif
