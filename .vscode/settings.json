@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "string.h": "c",
+        "stdlib.h": "c",
+        "time.h": "c",
+        "typeinfo": "c",
+        "sales_dao.h": "c",
+        "products_dao.h": "c",
+        "utils.h": "c",
+        "stdio.h": "c",
+        "modificações do código teste": "c",
+        "sales.h": "c",
+        "products.h": "c"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "${workspaceFolder}/include"
+      ]
+}

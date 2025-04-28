@@ -1,10 +1,13 @@
-#ifndef PRODUCTS_DAO
-#define PRODUCTS_DAO
-#include "utils.h"
+#ifndef PRODUCTS
+#define PRODUCTS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+struct ProductList;
+
 struct Product {
   int id;
   char name[50];
@@ -12,16 +15,10 @@ struct Product {
   float price;
 };
 
-struct ProductList {
-  struct Product *product;
-  int count;
-  int capacity;
-};
 
 #define PRODUCT_LIST_PATH "data/products.txt"
 
 struct ProductList getAllproducts();
 struct Product getProductByID(int id);
-void printProducts(struct ProductList *productList);
-int verifyID(struct ProductList *productList, int id);
+int verifyProductID(struct ProductList *productList, int id);
 #endif

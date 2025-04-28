@@ -41,10 +41,8 @@ automaticamente o preço pago na venda realizada para cada item registrado;
  ✅ Trocar o ID do item pelo nome
 
 ✅ Faturamento bruto diário sob as vendas (o usuário digitará a data);
-
 ✅ Quantidade total de itens vendidos no dia, no ato do registro da venda, ou seja, assim que finalizar aquela venda específica;
 ❌ Quantidade de clientes que realizaram compras naquele dia (o usuário digitará a data);
-❌ O programa também deverá calcular automaticamente a quantidade de clientes que realizaram compras naquele dia.
 
 **Linguagem de Programação:**
    - O sistema deve ser desenvolvido utilizando **Linguagem C**.
@@ -60,7 +58,7 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 
 Compila o programa:
 ```bash
-gcc main.c sales_dao.c products_dao.c utils.c -o main
+gcc main.c dao/products.c dao/sales.c utils/utils.c -o main -I.
 ```
 
 Roda o programa:

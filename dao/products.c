@@ -1,4 +1,4 @@
-#include "products_dao.h"
+#include "products.h"
 
 struct ProductList getAllproducts() {
   FILE *file = fopen(PRODUCT_LIST_PATH, "r");
@@ -37,17 +37,7 @@ struct Product getProductByID(int id) {
   }
 }
 
-void printProducts(struct ProductList *productList) {
-  printf("Tabela de produtos:\n");
-  printf("id | nome | marca | valor\n");
-  for (int i = 0; i < productList->count; i++) {
-    printf("%03d | %s | %s | %1.2f\n", productList->product[i].id,
-           productList->product[i].name, productList->product[i].brand,
-           productList->product[i].price);
-  }
-}
-
-int verifyID(struct ProductList *productList, int id) {
+int verifyProductID(struct ProductList *productList, int id) {
   for (int i = 0; i < productList->count; i++) {
     if (id == productList->product[i].id) {
       return 1;
