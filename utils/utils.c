@@ -1,6 +1,7 @@
 #include <stdlib.h>
-
-// #include "utils.h"
+#include "utils.h"
+#include "../include/products.h"
+#include <stdio.h>
 
 // // struct Map {
 // //   int id;
@@ -117,18 +118,18 @@
 //   }
 // }
 
-// void printProducts(struct ProductList *productList) {
-//   printf("\nTabela de produtos:\n");
-//   printf("- - - - - - - - - - - -\n\n");
-//   printf("%4s | %15s | %7s | %30s \n", "id", "marca", "valor", "nome");
-//   for (int i = 0; i < productList->count; i++) {
-//     printf("%4d | %15s | %7.2f | %30s \n", productList->product[i].id,
-//             productList->product[i].brand,
-//            productList->product[i].price, productList->product[i].name);
-//   }
+void printProducts(struct ProductList *list) {
+  printf("\nTabela de produtos:\n");
+  printf("- - - - - - - - - - - -\n\n");
+  printf("%4s | %15s | %7s | %30s \n", "id", "marca", "valor", "nome");
+  for (int i = 0; i < list->count; i++) {
+    printf("%4d | %15s | %7.2f | %30s \n", list->product[i].id,
+            list->product[i].brand,
+           list->product[i].price, list->product[i].name);
+  }
 
-//   return;
-// }
+  return;
+}
 
 void clearTerminal() {
   #ifdef _WIN32
