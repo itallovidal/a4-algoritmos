@@ -1,6 +1,8 @@
+#include <stdio.h>
+
 // #include "./include/products.h"
 // #include "./include/sales.h"
-// #include "./utils/utils.h"
+#include "./utils/utils.h"
 
 // void registerNewSale() {
 //   clearTerminal();  
@@ -136,52 +138,52 @@
 // //   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
 // // }
 
-// int main() {
-//   clearTerminal();
-//   int isRunning = 1;
-//   printf("\n\nBem vindo ao seu sistema de PetShop!\n");
-//   printf("---------------------\n");
+int main() {
+  clearTerminal();
+  int isRunning = 1;
+  printf("\n\nBem vindo ao seu sistema de PetShop!\n");
+  printf("---------------------\n");
 
-//   while (isRunning) {
-//     printf("\n- - - - Menu - - - - \n\n");
+  while (isRunning) {
+    printf("\n- - - - Menu - - - - \n\n");
 
-//     int option;
-//     printf("1 - Cadastrar uma nova venda\n");
-//     printf("- - - - - - - - - - - -\n");
-//     printf("2 - Listagem de vendas no dia X\n");
-//     printf("3 - Faturamento de vendas no dia X\n");
-//     printf("- - - - - - - - - - - -\n");
-//     printf("4 - Produtos mais vendido no dia X\n");
-//     printf("5 - Produtos menos vendido no dia X\n");
-//     printf("- - - - - - - - - - - -\n");
-//     printf("6 - Sair");
-//     printf("\n\n- - - - - - - - - - \n\n");
-//     printf("-> ");
-//     scanf("%d", &option);
+    int option;
+    printf("1 - Cadastrar uma nova venda\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("2 - Listagem de vendas no dia X\n");
+    printf("3 - Faturamento de vendas no dia X\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("4 - Produtos mais vendido no dia X\n");
+    printf("5 - Produtos menos vendido no dia X\n");
+    printf("- - - - - - - - - - - -\n");
+    printf("6 - Sair");
+    printf("\n\n- - - - - - - - - - \n\n");
+    printf("-> ");
+    scanf("%d", &option);
 
-//     switch (option) {
-//     case 1:
-//       registerNewSale();
-//       break;
-//     case 2:
-//       // listAllSalesByDay();
-//       break;
-//     case 3:
-//       // getRevenueByDay();
-//       break;
-//     case 4:
-//       // listMostSoldProducts();
-//       break;
-//     case 5:
-//       // listLessSoldProducts();
-//       break;
-//     case 6:
-//       isRunning = 0;
-//       break;
-//     default:
-//       break;
-//     }
-//   }
+    switch (option) {
+    case 1:
+      // registerNewSale();
+      break;
+    case 2:
+      // listAllSalesByDay();
+      break;
+    case 3:
+      // getRevenueByDay();
+      break;
+    case 4:
+      // listMostSoldProducts();
+      break;
+    case 5:
+      // listLessSoldProducts();
+      break;
+    case 6:
+      isRunning = 0;
+      break;
+    default:
+      break;
+    }
+  }
 
-//   return 0;
-// }
+  return 0;
+}

@@ -1,9 +1,10 @@
-// #ifndef UTILS
-// #define UTILS
-// #include <stdio.h>
-// #include <stdlib.h>
+#ifndef UTILS
+#define UTILS
+
+// 
 // #include <string.h>
 // #include <time.h>
+
 
 // struct SaleList;
 // struct ProductList;
@@ -13,10 +14,12 @@
 //   int id;
 //   int count;
 // };
-// void clearTerminal();
 // struct DateToSearch getDateToSearchInput();
+
+void clearTerminal();
+
 // // struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList);
 // // struct ProductCountData getMostSoldProduct(struct SaleRowList *saleRowList);
 // void printSales(struct SaleList *saleList);
 // void printProducts(struct ProductList *productList);
-// #endif
+#endif

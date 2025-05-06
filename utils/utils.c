@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 // #include "utils.h"
 
 // // struct Map {
@@ -128,10 +130,10 @@
 //   return;
 // }
 
-// void clearTerminal() {
-//   #ifdef _WIN32
-//       system("cls");
-//   #else
-//       system("clear");
-//   #endif
-//   }
+void clearTerminal() {
+  #ifdef _WIN32
+      system("cls");
+  #else
+      system("clear");
+  #endif
+  }
