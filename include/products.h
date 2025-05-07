@@ -1,8 +1,6 @@
 #ifndef PRODUCTS
 #define PRODUCTS
 
-// #include <string.h>
-// #include <time.h>
 #define PRODUCT_LIST_PATH "data/products.txt"
 
 struct ProductList {
@@ -20,6 +18,6 @@ struct Product {
 
 
 struct ProductList getAllproducts();
-// struct Product getProductByID(int id);
+struct Product getProductByID(int id);
 int verifyProductID(struct ProductList *productList, int id);
 #endif
