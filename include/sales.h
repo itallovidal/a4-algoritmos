@@ -2,6 +2,9 @@
 #define SALES
 #include <time.h>
 
+#define SELL_FILE_PATH "data/sales.txt"
+
+
 // Modelo da venda
 // esse modelo representa o conjunto das 
 // informações de uma venda unidas
@@ -83,10 +86,9 @@ struct Sale {
 //   int count;
 // };
 
-// #define SELL_FILE_PATH "data/sales.txt"
 
 // struct SaleRowList getSaleRegistersByDay(struct DateToSearch *dateToSearch);
 // void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
 // struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
-// void createSale(struct SaleRowTXT *rows, int quantity);
+void createSale(struct Sale *sale, int quantity);
 
