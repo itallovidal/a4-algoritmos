@@ -1,5 +1,7 @@
 #include "../include/sales.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
 //   FILE *file = fopen(SELL_FILE_PATH, "r");
@@ -63,72 +65,79 @@
 //   return saleRowList;
 // }
 
-// struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
-//   struct SaleList saleList;
+struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch) {
+  struct RegisteredSales registeredSales = {
+    .count = 0,
+    .sales = malloc(sizeof(struct Sale) * 50),
+  };
 
-//   FILE *file = fopen(SELL_FILE_PATH, "r");
-//   if (file == NULL) {
-//     return saleList;
-//   }
+  FILE *file = fopen(SELL_FILE_PATH, "r");
+  if (file == NULL) {
+    return registeredSales;
+  }
 
-//   saleList.sale = malloc(sizeof(struct Sale) * 20);
-//   saleList.count = 0;
+  if (registeredSales.sales == NULL) {
+    return registeredSales;
+  }
 
-//   if (saleList.sale == NULL) {
-//     return saleList;
-//   }
+  
+  struct SaleRowTXT row;
+  int previousSaleID = -1;
+  int currentSale = 0;
 
-//   struct SaleRowTXT row;
+  while (fscanf(file, "%d %s %d %d %f %ld", 
+                                          &row.id, 
+                                          row.clientID, 
+                                          &row.productID,
+                                          &row.quantity, 
+                                          &row.productTotalValue, 
+                                          &row.date 
+                                        ) == 6) {
 
-//   int previousSaleID = -1;
-//   int currentSale = 0;
+    struct tm *formattedDate = gmtime(&row.date);
+    int i;
 
-//   while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
-//                 &row.quantity, &row.productTotalValue, row.clientID, &row.date ) == 6) {
+    if (formattedDate->tm_mday == dateToSearch->day &&
+        formattedDate->tm_mon == dateToSearch->month) {
 
-//     struct tm *formattedDate = gmtime(&row.date);
-//     int i;
+      if (previousSaleID != row.id) {
+        currentSale = 0;
+        registeredSales.count++;
+        i = registeredSales.count - 1;
 
-//     if (formattedDate->tm_mday == dateToSearch->day &&
-//         formattedDate->tm_mon == dateToSearch->month) {
+        registeredSales.sales[i].id = row.id;
+        strcpy(registeredSales.sales[i].clientID, row.clientID);
+        registeredSales.sales[i].total = row.productTotalValue;
+        registeredSales.sales[i].date = row.date;
 
-//       if (previousSaleID != row.id) {
-//         currentSale = 0;
-//         saleList.count++;
-//         i = saleList.count - 1;
+        registeredSales.sales[i].saleList.count = 1;
+        registeredSales.sales[i].saleList.items = malloc(sizeof(struct SaleItems) * 20);
+        
+        registeredSales.sales[i].saleList.items[0].productID = row.productID;
+        registeredSales.sales[i].saleList.items[0].quantity = row.quantity;
+        registeredSales.sales[i].saleList.items[0].productTotalValue = row.productTotalValue;
+         
+        currentSale++;
+        previousSaleID = row.id;
+        continue;
+      }
 
-//         saleList.sale[i].id = row.id;
-//         strcpy(saleList.sale[i].clientID, row.clientID);
-//         saleList.sale[i].productCount++;
-//         saleList.sale[i].total = row.productTotalValue;
-//         saleList.sale[i].date = row.date;
+      i = registeredSales.count - 1;
 
-//         saleList.sale[i].list.product =
-//             malloc(sizeof(struct ProductList) * 20);
+      registeredSales.sales[i].saleList.items[currentSale].productID = row.productID;
+      registeredSales.sales[i].saleList.items[currentSale].productTotalValue = row.productTotalValue;
+      registeredSales.sales[i].saleList.items[currentSale].quantity = row.quantity;
 
-//         saleList.sale[i].list.product[0] = getProductByID(row.productID);
-//         currentSale++;
+      registeredSales.sales[i].total += row.productTotalValue;
+      registeredSales.sales[i].saleList.count++;
 
-//         saleList.sale[i].list.count = currentSale;
-//         previousSaleID = row.id;
-//         continue;
-//       }
+      currentSale++;
+    }
+  }
 
-//       i = saleList.count - 1;
-
-//       struct Product product =
-//       saleList.sale[i].list.product[currentSale] = getProductByID(row.productID);
-
-//       saleList.sale[i].total += row.productTotalValue;
-//       saleList.sale[i].productCount++;
-
-//       currentSale++;
-//     }
-//   }
-
-//   fclose(file);
-//   return saleList;
-// }
+  fclose(file);
+  return registeredSales;
+}
 
 void createSale(struct Sale *sale, int quantity)
 {

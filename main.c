@@ -67,7 +67,6 @@ void registerNewSale() {
     if(!isAddingProduct) {
       break;
     }
-
   }
 
   printf("Salvando..\n");
@@ -75,13 +74,23 @@ void registerNewSale() {
 
   printf("\n-----\n");
 
-  // struct tm *formattedDate = gmtime(&saleRows[0].date);
-  // struct DateToSearch dateToSearch = {
-  //     .day = formattedDate->tm_mday,
-  //     .month = formattedDate->tm_mon,
-  // };
-  // struct SaleList saleList = getSalesByDay(&dateToSearch);
-  // printSales(&saleList);
+  struct tm *formattedDate = gmtime(&sale.date);
+  struct DateToSearch dateToSearch = {
+      .day = formattedDate->tm_mday,
+      .month = formattedDate->tm_mon,
+  };
+  struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+
+  int totalSoldProducts = 0;
+  for (int i = 0; i < registeredSales.count; i++)
+  { 
+    for (int j = 0; j < registeredSales.sales[i].saleList.count; j++)
+    {
+      totalSoldProducts += registeredSales.sales[i].saleList.items[j].quantity;
+    }
+  }
+
+  printf("\n\n Total de itens vendidos no dia: %d\n", totalSoldProducts);
 }
 
 // // void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {

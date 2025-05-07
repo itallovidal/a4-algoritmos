@@ -13,12 +13,21 @@
 // 1    | a@.com    | 1         | 2         | 10.00             | 1745730332
 // 1    | a@.com    | 2         | 1         | 05.00             | 1745730332
 
+struct SaleRowTXT {
+  int id;
+  char clientID[50];
+  int productID;
+  int quantity;
+  float productTotalValue;
+  time_t date;
+};
+
 // {
 //     id: 1,
 //     clientID: "a@.com",
-//     productList: {
+//     saleList: {
 //         count: 2,
-//         list: [
+//         items: [
 //             { productID: 1, quantity: 2, productTotalValue: 10.00 },
 //             { productID: 2, quantity: 1, productTotalValue: 5.00 }
 //         ]
@@ -46,7 +55,11 @@ struct Sale {
   time_t date;
 };
 
-#endif
+struct RegisteredSales {
+  int count;
+  struct Sale *sales;
+};
+
 
 // struct ProductDataInList{
 //   int id;
@@ -64,21 +77,14 @@ struct Sale {
 // // cada produto será registrado em uma linha
 // // depois será agrupado pelo id da venda 
 
-// struct SaleRowTXT {
-//   int id;
-//   int productID;
-//   int quantity;
-//   float productTotalValue;
-//   char clientID[50];
-//   time_t date;
-// };
+
 
 // // ---
 
-// struct DateToSearch {
-//   int day;
-//   int month;
-// };
+struct DateToSearch {
+  int day;
+  int month;
+};
 
 
 // struct SaleRowList {
@@ -89,6 +95,7 @@ struct Sale {
 
 // struct SaleRowList getSaleRegistersByDay(struct DateToSearch *dateToSearch);
 // void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
-// struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
+struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch);
 void createSale(struct Sale *sale, int quantity);
 
+#endif

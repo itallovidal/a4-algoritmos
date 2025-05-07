@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "utils.h"
-#include "../include/products.h"
+#include "../include/sales.h"
 #include <stdio.h>
 
 // // struct Map {
@@ -99,24 +99,33 @@
 // //   return dateToSearch;
 // // }
 
-// void printSales(struct SaleList *saleList) {
-//   printf("\nTotal de vendas nesse dia: %d\n", saleList->count);
-//   printf("- - - - - - - - - - - -\n\n");
+void printSales(struct RegisteredSales *registered) {
+  printf("\nTotal de vendas nesse dia: %d\n", registered->count);
+  printf("- - - - - - - - - - - -\n\n");
 
-//   for (int i = 0; i < saleList->count; i++) {
-//     printf("ID -> %d\n", saleList->sale[i].id);
-//     printf("Quantidade de produtos diferentes comprados: %d\n",
-//            saleList->sale[i].productCount);
-//     printf("Valor Total da venda: %1.2f\n", saleList->sale[i].total);
-//     printf("\nItens comprados:\n");
-//     printf(" id | qtd\n");
+  for (int i = 0; i < registered->count; i++) {
+    printf("- - - - - - - - - - - -\n\n");
+    printf("ID -> %d\n", registered->sales[i].id);
+    printf("Quantidade de produtos diferentes comprados: %d\n",
+           registered->sales[i].saleList.count);
+    printf("ID do cliente: %s\n", registered->sales[i].clientID);
+    printf("Valor Total da venda: %1.2f\n", registered->sales[i].total);
+    printf("\nItens comprados:\n");
+    printf(" id | qtd\n");
 
-//     for (int j = 0; j < saleList->sale[i].list.count; j++) {
-//       printf("%03d |", saleList->sale[i].list.product[j].id);
-//       printf(" %d\n", saleList->sale[i].list.product[j].quantity);
-//     }
-//   }
-// }
+    int itemsCount = 0;
+
+    for (int j = 0; j < registered->sales[i].saleList.count; j++) {
+      printf("%03d |", registered->sales[i].saleList.items[j].productID);
+      printf(" %d\n", registered->sales[i].saleList.items[j].quantity);
+      itemsCount += registered->sales[i].saleList.items[j].quantity;
+    }
+
+    printf("\nQuantidade total de itens: %d\n", itemsCount);
+    printf("- - - - - - - - - - - -\n\n");
+  }
+  return;
+}
 
 void printProducts(struct ProductList *list) {
   printf("\nTabela de produtos:\n");

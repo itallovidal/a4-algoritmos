@@ -10,7 +10,8 @@
         "stdio.h": "c",
         "modificações do código teste": "c",
         "sales.h": "c",
-        "products.h": "c"
+        "products.h": "c",
+        "algorithm": "c"
     },
     "C_Cpp.default.includePath": [
         "${workspaceFolder}/**",
