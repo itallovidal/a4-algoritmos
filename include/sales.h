@@ -1,25 +1,50 @@
 #ifndef SALES
 #define SALES
+#include <time.h>
 
 
-// // Modelo da venda
-// // esse modelo representa o conjunto das 
-// // informações de uma venda unidas
+// Modelo da venda
+// esse modelo representa o conjunto das 
+// informações de uma venda unidas
 
-// struct ProductList{
-//   struct ProductDataInList* product;
-//   int count;
-// };
+// id   | clientID  | productID | quantity  | productTotalValue | date
+// 1    | a@.com    | 1         | 2         | 10.00             | 1745730332
+// 1    | a@.com    | 2         | 1         | 05.00             | 1745730332
 
-// struct Sale {
-//   int id;
-//   char clientID[50];
-//   struct ProductList list;
-//   int productCount;
-//   float total;
-//   time_t date;
-// };
+// {
+//     id: 1,
+//     clientID: "a@.com",
+//     productList: {
+//         count: 2,
+//         list: [
+//             { productID: 1, quantity: 2, productTotalValue: 10.00 },
+//             { productID: 2, quantity: 1, productTotalValue: 5.00 }
+//         ]
+//     },
+//     total: 15.00,
+//     date: 1745730332
+// }
 
+struct Sale {
+  int id;
+  char clientID[50];
+  struct SaleList saleList;
+  float total;
+  time_t date;
+};
+
+struct SaleList{
+    int count;
+    struct SaleItems* items;
+};
+
+struct SaleItems{
+    int productID;
+    int quantity;
+    float productTotalValue;
+};
+
+#endif
 
 // struct ProductDataInList{
 //   int id;
@@ -53,10 +78,6 @@
 //   int month;
 // };
 
-// struct SaleList {
-//   struct Sale *sale;
-//   int count;
-// };
 
 // struct SaleRowList {
 //   struct SaleRow *saleRow;
@@ -70,4 +91,3 @@
 // struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
 // void createSale(struct SaleRowTXT *rows, int quantity);
 
-#endif
