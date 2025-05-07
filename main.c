@@ -101,6 +101,22 @@ void listAllSalesByDay() {
   printSales(&registeredSales);
 }
 
+// OPTION 3 ->
+void getRevenueByDay() {
+  struct DateToSearch dateToSearch = getDateToSearchInput();
+  struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+  float totalRevenue = 0;
+
+  for (int i = 0; i < registeredSales.count; i++) {
+    printf("\nID da venda: %d\n", registeredSales.sales[i].id);
+    printf("Valor Total da venda: %1.2f\n", registeredSales.sales[i].total);
+    totalRevenue += registeredSales.sales[i].total;
+  }
+
+  printf("\nO valor total de vendas no dia %d/%d foi de: %.2f\n",
+         dateToSearch.day, dateToSearch.month + 1, totalRevenue);
+}
+
 // // void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {
 // //   int itensCount = 0;
 
@@ -133,21 +149,7 @@ void listAllSalesByDay() {
 // //   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
 // // }
 
-// // void getRevenueByDay() {
-// //   struct DateToSearch dateToSearch = getDateToSearchInput();
-// //   struct SaleList saleList = getSalesByDay(&dateToSearch);
-// //   float totalRevenue = 0;
 
-// //   for (int i = 0; i < saleList.count; i++) {
-// //     printf("\nID da venda: %d\n", saleList.sale[i].id);
-// //     printf("Valor Total da venda: %1.2f\n", saleList.sale[i].totalValue);
-
-// //     totalRevenue += saleList.sale[i].totalValue;
-// //   }
-
-// //   printf("\nO valor total da venda no dia %d/%d foi de: %.2f\n",
-// //          dateToSearch.day, dateToSearch.month + 1, totalRevenue);
-// // }
 
 // // void listLessSoldProducts() {
 // //   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -189,7 +191,7 @@ int main() {
       listAllSalesByDay();
       break;
     case 3:
-      // getRevenueByDay();
+      getRevenueByDay();
       break;
     case 4:
       // listMostSoldProducts();
