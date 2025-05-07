@@ -58,7 +58,7 @@ automaticamente o preço pago na venda realizada para cada item registrado;
 
 Compila o programa:
 ```bash
-gcc main.c utils/utils.c dao/products.c -o main
+gcc main.c utils/utils.c dao/products.c dao/sales.c -o main
 ```
 
 Roda o programa:
