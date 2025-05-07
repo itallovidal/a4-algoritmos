@@ -29,15 +29,15 @@ struct ProductList getAllproducts() {
   return list;
 }
 
-// struct Product getProductByID(int id) {
-//   struct ProductList productList = getAllproducts();
-//   for (int i = 0; i < productList.count; i++) {
-//     if (productList.product[i].id == id) {
-//       return productList.product[i];
-//       break;
-//     }
-//   }
-// }
+struct Product getProductByID(int id) {
+  struct ProductList productList = getAllproducts();
+  for (int i = 0; i < productList.count; i++) {
+    if (productList.product[i].id == id) {
+      return productList.product[i];
+      break;
+    }
+  }
+}
 
 int verifyProductID(struct ProductList *productList, int id) {
   for (int i = 0; i < productList->count; i++) {
