@@ -1,5 +1,5 @@
-#include "sales.h"
-#include "products.h" 
+#include "../include/sales.h"
+#include <stdio.h>
 
 // void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount) {
 //   FILE *file = fopen(SELL_FILE_PATH, "r");
@@ -63,87 +63,92 @@
 //   return saleRowList;
 // }
 
-struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
-  struct SaleList saleList;
+// struct SaleList getSalesByDay(struct DateToSearch *dateToSearch) {
+//   struct SaleList saleList;
 
-  FILE *file = fopen(SELL_FILE_PATH, "r");
-  if (file == NULL) {
-    return saleList;
-  }
+//   FILE *file = fopen(SELL_FILE_PATH, "r");
+//   if (file == NULL) {
+//     return saleList;
+//   }
 
-  saleList.sale = malloc(sizeof(struct Sale) * 20);
-  saleList.count = 0;
+//   saleList.sale = malloc(sizeof(struct Sale) * 20);
+//   saleList.count = 0;
 
-  if (saleList.sale == NULL) {
-    return saleList;
-  }
+//   if (saleList.sale == NULL) {
+//     return saleList;
+//   }
 
-  struct SaleRowTXT row;
+//   struct SaleRowTXT row;
 
-  int previousSaleID = -1;
-  int currentSale = 0;
+//   int previousSaleID = -1;
+//   int currentSale = 0;
 
-  while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
-                &row.quantity, &row.productTotalValue, row.clientID, &row.date ) == 6) {
+//   while (fscanf(file, "%d %d %d %d %f %ld", &row.id, &row.productID,
+//                 &row.quantity, &row.productTotalValue, row.clientID, &row.date ) == 6) {
 
-    struct tm *formattedDate = gmtime(&row.date);
-    int i;
+//     struct tm *formattedDate = gmtime(&row.date);
+//     int i;
 
-    if (formattedDate->tm_mday == dateToSearch->day &&
-        formattedDate->tm_mon == dateToSearch->month) {
+//     if (formattedDate->tm_mday == dateToSearch->day &&
+//         formattedDate->tm_mon == dateToSearch->month) {
 
-      if (previousSaleID != row.id) {
-        currentSale = 0;
-        saleList.count++;
-        i = saleList.count - 1;
-        
-        saleList.sale[i].id = row.id;
-        strcpy(saleList.sale[i].clientID, row.clientID);
-        saleList.sale[i].productCount++;
-        saleList.sale[i].total = row.productTotalValue;
-        saleList.sale[i].date = row.date;
+//       if (previousSaleID != row.id) {
+//         currentSale = 0;
+//         saleList.count++;
+//         i = saleList.count - 1;
 
-        saleList.sale[i].list.product =
-            malloc(sizeof(struct ProductList) * 20);
+//         saleList.sale[i].id = row.id;
+//         strcpy(saleList.sale[i].clientID, row.clientID);
+//         saleList.sale[i].productCount++;
+//         saleList.sale[i].total = row.productTotalValue;
+//         saleList.sale[i].date = row.date;
 
-        saleList.sale[i].list.product[0] = getProductByID(row.productID);
-        currentSale++;
+//         saleList.sale[i].list.product =
+//             malloc(sizeof(struct ProductList) * 20);
 
-        saleList.sale[i].list.count = currentSale;
-        previousSaleID = row.id;
-        continue;
-      }
+//         saleList.sale[i].list.product[0] = getProductByID(row.productID);
+//         currentSale++;
 
-      i = saleList.count - 1;
+//         saleList.sale[i].list.count = currentSale;
+//         previousSaleID = row.id;
+//         continue;
+//       }
 
-      struct Product product = 
-      saleList.sale[i].list.product[currentSale] = getProductByID(row.productID);
+//       i = saleList.count - 1;
 
-      saleList.sale[i].total += row.productTotalValue;
-      saleList.sale[i].productCount++;
+//       struct Product product =
+//       saleList.sale[i].list.product[currentSale] = getProductByID(row.productID);
 
-      currentSale++;
-    }
-  }
+//       saleList.sale[i].total += row.productTotalValue;
+//       saleList.sale[i].productCount++;
 
-  fclose(file);
-  return saleList;
-}
+//       currentSale++;
+//     }
+//   }
 
-void createSale(struct SaleRowTXT *rows, int quantity) {
+//   fclose(file);
+//   return saleList;
+// }
+
+void createSale(struct Sale *sale, int quantity)
+{
   FILE *file = fopen(SELL_FILE_PATH, "a");
 
-  printf("quantidade: %d\n", quantity);
-
-  if (file == NULL) {
+  if (file == NULL)
+  {
     printf("\nErro ao abrir o arquivo %s\n", SELL_FILE_PATH);
     return;
   }
 
-  for (int i = 0; i < quantity; i++) {
-    fprintf(file, "%d %03d %d %1.2f %s %ld\n", rows[i].id, rows[i].productID,
-            rows[i].quantity, rows[i].productTotalValue, rows[i].clientID,
-            rows[i].date);
+  for (int i = 0; i < quantity; i++)
+  {
+    fprintf(file, "%d %s %d %d %1.2f %ld \n",
+            sale->id,
+            sale->clientID,
+            sale->saleList.items[i].productID,
+            sale->saleList.items[i].quantity,
+            sale->saleList.items[i].productTotalValue,
+            sale->date);
   }
 
   fclose(file);
