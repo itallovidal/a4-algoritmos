@@ -2,7 +2,6 @@
 #define SALES
 #include <time.h>
 
-
 // Modelo da venda
 // esse modelo representa o conjunto das 
 // informações de uma venda unidas
@@ -25,23 +24,23 @@
 //     date: 1745730332
 // }
 
+struct SaleItems {
+  int productID;
+  int quantity;
+  float productTotalValue;
+};
+
+struct SaleList {
+  int count;
+  struct SaleItems* items;
+};
+
 struct Sale {
   int id;
   char clientID[50];
   struct SaleList saleList;
   float total;
   time_t date;
-};
-
-struct SaleList{
-    int count;
-    struct SaleItems* items;
-};
-
-struct SaleItems{
-    int productID;
-    int quantity;
-    float productTotalValue;
 };
 
 #endif
