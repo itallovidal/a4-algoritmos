@@ -39,12 +39,12 @@ struct ProductList getAllproducts() {
 //   }
 // }
 
-// int verifyProductID(struct ProductList *productList, int id) {
-//   for (int i = 0; i < productList->count; i++) {
-//     if (id == productList->product[i].id) {
-//       return 1;
-//     }
-//   }
+int verifyProductID(struct ProductList *productList, int id) {
+  for (int i = 0; i < productList->count; i++) {
+    if (id == productList->product[i].id) {
+      return 1;
+    }
+  }
 
-//   return 0;
-// }
+  return 0;
+}

@@ -1,9 +1,6 @@
-// #ifndef SALES
-// #define SALES
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <time.h>
+#ifndef SALES
+#define SALES
+
 
 // // Modelo da venda
 // // esse modelo representa o conjunto das 
@@ -73,4 +70,4 @@
 // struct SaleList getSalesByDay(struct DateToSearch *dateToSearch);
 // void createSale(struct SaleRowTXT *rows, int quantity);
 
-// #endif
+#endif

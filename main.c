@@ -31,13 +31,14 @@ void registerNewSale() {
 
     printProducts(&productList);
 
-  //   int isProductValid = 0;
-  //   while (!isProductValid) {
-  //     printf("\nEscolha um produto por id para acrescentar à venda.");
-  //     printf("\n-> ");
-  //     scanf("%d", &saleRows[i].productID);
-  //     isProductValid = verifyProductID(&productList, saleRows[i].productID);
-  //   }
+    int isProductValid = 0;
+    while (!isProductValid) {
+      int productID;
+      printf("\nEscolha um produto por id para acrescentar à venda.");
+      printf("\n-> ");
+      scanf("%d", &productID);
+      isProductValid = verifyProductID(&productList, productID);
+    }
 
   //   printf("\nQual quantidade vendida deste produto?");
   //   printf("\n-> ");

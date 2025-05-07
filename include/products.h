@@ -21,5 +21,5 @@ struct Product {
 
 struct ProductList getAllproducts();
 // struct Product getProductByID(int id);
-// int verifyProductID(struct ProductList *productList, int id);
+int verifyProductID(struct ProductList *productList, int id);
 #endif
