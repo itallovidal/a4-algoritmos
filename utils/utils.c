@@ -86,18 +86,18 @@
 // //   return mostSoldProduct;
 // // }
 
-// // struct DateToSearch getDateToSearchInput() {
-// //   struct DateToSearch dateToSearch;
+struct DateToSearch getDateToSearchInput() {
+  struct DateToSearch dateToSearch;
 
-// //   printf("\nDigite o Dia abaixo para listar o relatório:\n");
-// //   printf("Padrão da data: dd/mm -> ");
-// //   char input[30];
-// //   scanf("%s", input);
-// //   sscanf(input, "%d/%d", &dateToSearch.day, &dateToSearch.month);
-// //   dateToSearch.month -= 1;
+  printf("\nDigite o Dia abaixo para listar o relatório:\n");
+  printf("Padrão da data: dd/mm -> ");
+  char input[30];
+  scanf("%s", input);
+  sscanf(input, "%d/%d", &dateToSearch.day, &dateToSearch.month);
+  dateToSearch.month -= 1;
 
-// //   return dateToSearch;
-// // }
+  return dateToSearch;
+}
 
 void printSales(struct RegisteredSales *registered) {
   printf("\nTotal de vendas nesse dia: %d\n", registered->count);

@@ -5,6 +5,7 @@
 #include "./include/sales.h"
 #include "./utils/utils.h"
 
+// OPTION 1 ->
 void registerNewSale() {
   clearTerminal();  
 
@@ -93,6 +94,13 @@ void registerNewSale() {
   printf("\n\n Total de itens vendidos no dia: %d\n", totalSoldProducts);
 }
 
+// OPTION 2 ->
+void listAllSalesByDay() {
+  struct DateToSearch dateToSearch = getDateToSearchInput();
+  struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+  printSales(&registeredSales);
+}
+
 // // void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {
 // //   int itensCount = 0;
 
@@ -114,11 +122,7 @@ void registerNewSale() {
 // //   printf("\nQuantidade total de itens: %d \n", itensCount);
 // // }
 
-// // void listAllSalesByDay() {
-// //   struct DateToSearch dateToSearch = getDateToSearchInput();
-// //   struct SaleList saleList = getSalesByDay(&dateToSearch);
-// //   printSales(&saleList);
-// // }
+
 
 // // void listMostSoldProducts() {
 // //   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -182,7 +186,7 @@ int main() {
       registerNewSale();
       break;
     case 2:
-      // listAllSalesByDay();
+      listAllSalesByDay();
       break;
     case 3:
       // getRevenueByDay();

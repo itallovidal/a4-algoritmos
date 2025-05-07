@@ -14,8 +14,8 @@
 //   int id;
 //   int count;
 // };
-// struct DateToSearch getDateToSearchInput();
 
+struct DateToSearch getDateToSearchInput();
 void clearTerminal();
 
 // // struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList);
