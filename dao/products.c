@@ -34,7 +34,6 @@ struct Product getProductByID(int id) {
   for (int i = 0; i < productList.count; i++) {
     if (productList.product[i].id == id) {
       return productList.product[i];
-      break;
     }
   }
 }

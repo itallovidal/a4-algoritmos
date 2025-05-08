@@ -3,88 +3,89 @@
 #include "../include/sales.h"
 #include <stdio.h>
 
-// // struct Map {
-// //   int id;
-// //   int count;
-// // };
+struct Map {
+  int id;
+  int count;
+};
 
-// // struct Hashmap {
-// //   struct Map *map;
-// //   int size;
-// // };
+struct Hashmap {
+  struct Map *map;
+  int size;
+};
 
-// // int getMapIndex(struct Hashmap *hashmap, int id) {
-// //   for (int i = 0; i < hashmap->size; i++) {
-// //     if (hashmap->map[i].id == id) {
-// //       return i;
-// //     }
-// //   }
+int getMapIndex(struct Hashmap *hashmap, int id) {
+  for (int i = 0; i < hashmap->size; i++) {
+    if (hashmap->map[i].id == id) {
+      return i;
+    }
+  }
 
-// //   return -1;
-// // }
+  return -1;
+}
 
-// // struct Hashmap getProductHashmap(struct SaleRowList *saleRowList) {
-// //   struct Hashmap hashmap;
-// //   hashmap.size = 0;
-// //   hashmap.map = malloc(sizeof(struct Map) * saleRowList->count);
+struct Hashmap getProductHashmap(struct RegisteredSales *registry) {
+  struct Hashmap hashmap = {
+    .map = malloc(sizeof(struct Map) * (registry->count + 10)),
+    .size = 0,
+  };
 
-// //   for (int i = 0; i < saleRowList->count; i++) {
-// //     int mapIndex = getMapIndex(&hashmap, saleRowList->saleRow[i].productID);
+  for (int i = 0; i < registry->count; i++) {
+    for (int j = 0; j < registry->sales->saleList.count; j++) {
+      int mapIndex = getMapIndex(&hashmap, registry->sales[i].saleList.items[j].productID);
+  
+      if (mapIndex == -1) {
+        hashmap.map[hashmap.size].id = registry->sales[i].saleList.items[j].productID;
+        hashmap.map[hashmap.size].count = registry->sales[i].saleList.items[j].quantity;
+        hashmap.size++;
+      } else {
+        hashmap.map[mapIndex].count += registry->sales[i].saleList.items[j].quantity;
+      }
+    }
+  }
 
-// //     if (mapIndex == -1) {
-// //       hashmap.map[hashmap.size].id = saleRowList->saleRow[i].productID;
-// //       hashmap.map[hashmap.size].count = 1;
-// //       hashmap.size++;
-// //     } else {
-// //       hashmap.map[mapIndex].count++;
-// //     }
-// //   }
+  return hashmap;
+}
 
-// //   return hashmap;
-// // }
+// struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList) {
+//   struct Hashmap hashmap = getProductHashmap(saleRowList);
 
-// // struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList) {
-// //   struct Hashmap hashmap = getProductHashmap(saleRowList);
+//   int lessSoldProductCount = 99999;
+//   int lessSoldProductId = -1;
+//   for (int j = 0; j < hashmap.size; j++) {
+//     if (hashmap.map[j].count < lessSoldProductCount) {
+//       lessSoldProductCount = hashmap.map[j].count;
+//       lessSoldProductId = hashmap.map[j].id;
+//     }
+//   }
 
-// //   int lessSoldProductCount = 99999;
-// //   int lessSoldProductId = -1;
-// //   for (int j = 0; j < hashmap.size; j++) {
-// //     if (hashmap.map[j].count < lessSoldProductCount) {
-// //       lessSoldProductCount = hashmap.map[j].count;
-// //       lessSoldProductId = hashmap.map[j].id;
-// //     }
-// //   }
+//   free(hashmap.map);
 
-// //   free(hashmap.map);
+//   struct ProductCountData mostSoldProduct;
+//   mostSoldProduct.id = lessSoldProductId;
+//   mostSoldProduct.count = lessSoldProductCount;
 
-// //   struct ProductCountData mostSoldProduct;
-// //   mostSoldProduct.id = lessSoldProductId;
-// //   mostSoldProduct.count = lessSoldProductCount;
+//   return mostSoldProduct;
+// }
 
-// //   return mostSoldProduct;
-// // }
+struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales) {
+  struct Hashmap hashmap = getProductHashmap(sales);
 
-// // struct ProductCountData getMostSoldProduct(struct SaleRowList *saleRowList) {
+  struct ProductSalesSummary mostSoldProduct = {
+    .id = -1,
+    .count = 0,
+  };
 
-// //   struct Hashmap hashmap = getProductHashmap(saleRowList);
+  for (int j = 0; j < hashmap.size; j++) {
+    if (hashmap.map[j].count > mostSoldProduct.count) {
+      mostSoldProduct.count = hashmap.map[j].count;
+      mostSoldProduct.id = hashmap.map[j].id;
+    }
+  }
 
-// //   int mostSoldProductCount = 0;
-// //   int mostSoldProductId = -1;
-// //   for (int j = 0; j < hashmap.size; j++) {
-// //     if (hashmap.map[j].count > mostSoldProductCount) {
-// //       mostSoldProductCount = hashmap.map[j].count;
-// //       mostSoldProductId = hashmap.map[j].id;
-// //     }
-// //   }
+  free(hashmap.map);
 
-// //   free(hashmap.map);
-
-// //   struct ProductCountData mostSoldProduct;
-// //   mostSoldProduct.id = mostSoldProductId;
-// //   mostSoldProduct.count = mostSoldProductCount;
-
-// //   return mostSoldProduct;
-// // }
+  return mostSoldProduct;
+}
 
 struct DateToSearch getDateToSearchInput() {
   struct DateToSearch dateToSearch;

@@ -117,48 +117,26 @@ void getRevenueByDay() {
          dateToSearch.day, dateToSearch.month + 1, totalRevenue);
 }
 
-// // void printSalesProducts(struct Sale *soldProducts, int soldProductsCount) {
-// //   int itensCount = 0;
-
-// //   printf("nome | marca | quantidade | Valor unitário | total | Data\n\n");
-
-// //   for (int i = 0; i < soldProductsCount; i++) {
-// //     printf("%s ", soldProducts[i].productName);
-// //     printf("| %s ", soldProducts[i].productBrand);
-// //     printf("| %d ", soldProducts[i].quantity);
-// //     printf("| %.2f ", soldProducts[i].unitValue);
-// //     printf("| %.2f ", soldProducts[i].totalValue);
-// //     printf("| %ld", soldProducts[i].saleDate);
-// //     printf("\n");
-
-// //     itensCount += soldProducts[i].quantity;
-// //   }
-
-// //   printf("\nQuantidade total de vendas: %d \n", soldProductsCount);
-// //   printf("\nQuantidade total de itens: %d \n", itensCount);
-// // }
-
-
-
-// // void listMostSoldProducts() {
-// //   struct DateToSearch dateToSearch = getDateToSearchInput();
-// //   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
-// //   struct ProductCountData mostSoldProduct = getMostSoldProduct(&saleRowList);
-
-// //   struct Product product = getProductByID(mostSoldProduct.id);
-// //   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
-// // }
-
-
-
-// // void listLessSoldProducts() {
-// //   struct DateToSearch dateToSearch = getDateToSearchInput();
-// //   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
-// //   struct ProductCountData lessSoldProduct = getLessSoldProduct(&saleRowList);
+// OPTION 4 ->
+void listMostSoldProducts() {
+  struct DateToSearch dateToSearch = getDateToSearchInput();
+  struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
   
-// //   struct Product product = getProductByID(lessSoldProduct.id);
-// //   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
-// // }
+  struct ProductSalesSummary mostSoldProduct = getMostSoldProduct(&registeredSales);
+
+  struct Product product = getProductByID(mostSoldProduct.id);
+  printf("\nProduto mais vendido: %s (ID: %03d)\n", product.name, product.id);
+  printf("Quantidade vendida: %d\n", mostSoldProduct.count);
+}
+
+// void listLessSoldProducts() {
+//   struct DateToSearch dateToSearch = getDateToSearchInput();
+//   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
+//   struct ProductCountData lessSoldProduct = getLessSoldProduct(&saleRowList);
+  
+//   struct Product product = getProductByID(lessSoldProduct.id);
+//   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
+// }
 
 int main() {
   clearTerminal();
@@ -194,7 +172,7 @@ int main() {
       getRevenueByDay();
       break;
     case 4:
-      // listMostSoldProducts();
+      listMostSoldProducts();
       break;
     case 5:
       // listLessSoldProducts();
