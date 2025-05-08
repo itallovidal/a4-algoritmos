@@ -129,14 +129,17 @@ void listMostSoldProducts() {
   printf("Quantidade vendida: %d\n", mostSoldProduct.count);
 }
 
-// void listLessSoldProducts() {
-//   struct DateToSearch dateToSearch = getDateToSearchInput();
-//   struct SaleRowList saleRowList = getSaleRegistersByDay(&dateToSearch);
-//   struct ProductCountData lessSoldProduct = getLessSoldProduct(&saleRowList);
+// OPTION 5 ->
+void listLessSoldProducts() {
+  struct DateToSearch dateToSearch = getDateToSearchInput();
+  struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
   
-//   struct Product product = getProductByID(lessSoldProduct.id);
-//   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
-// }
+  struct ProductSalesSummary mostSoldProduct = getLessSoldProduct(&registeredSales);
+  
+  struct Product product = getProductByID(mostSoldProduct.id);
+  printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
+  printf("Quantidade vendida: %d\n", mostSoldProduct.count);
+}
 
 int main() {
   clearTerminal();
@@ -175,7 +178,7 @@ int main() {
       listMostSoldProducts();
       break;
     case 5:
-      // listLessSoldProducts();
+      listLessSoldProducts();
       break;
     case 6:
       isRunning = 0;

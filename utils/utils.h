@@ -11,7 +11,7 @@ struct ProductSalesSummary {
 struct DateToSearch getDateToSearchInput();
 void clearTerminal();
 
-// struct ProductSalesSummary getLessSoldProduct(struct SaleRowList *saleRowList);
+struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) ;
 struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales);
 void printSales(struct RegisteredSales *registered);
 void printProducts(struct ProductList *productList);

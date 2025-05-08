@@ -30,7 +30,7 @@ struct Hashmap getProductHashmap(struct RegisteredSales *registry) {
   };
 
   for (int i = 0; i < registry->count; i++) {
-    for (int j = 0; j < registry->sales->saleList.count; j++) {
+    for (int j = 0; j < registry->sales[i].saleList.count; j++) {
       int mapIndex = getMapIndex(&hashmap, registry->sales[i].saleList.items[j].productID);
   
       if (mapIndex == -1) {
@@ -46,26 +46,25 @@ struct Hashmap getProductHashmap(struct RegisteredSales *registry) {
   return hashmap;
 }
 
-// struct ProductCountData getLessSoldProduct(struct SaleRowList *saleRowList) {
-//   struct Hashmap hashmap = getProductHashmap(saleRowList);
+struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) {
+  struct Hashmap hashmap = getProductHashmap(sales);
 
-//   int lessSoldProductCount = 99999;
-//   int lessSoldProductId = -1;
-//   for (int j = 0; j < hashmap.size; j++) {
-//     if (hashmap.map[j].count < lessSoldProductCount) {
-//       lessSoldProductCount = hashmap.map[j].count;
-//       lessSoldProductId = hashmap.map[j].id;
-//     }
-//   }
+  struct ProductSalesSummary lessSoldProduct = {
+    .id = -1,
+    .count = 9999999,
+  };
 
-//   free(hashmap.map);
+  for (int j = 0; j < hashmap.size; j++) {
+    if (hashmap.map[j].count < lessSoldProduct.count) {
+      lessSoldProduct.count = hashmap.map[j].count;
+      lessSoldProduct.id = hashmap.map[j].id;
+    }
+  }
 
-//   struct ProductCountData mostSoldProduct;
-//   mostSoldProduct.id = lessSoldProductId;
-//   mostSoldProduct.count = lessSoldProductCount;
+  free(hashmap.map);
 
-//   return mostSoldProduct;
-// }
+  return lessSoldProduct;
+}
 
 struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales) {
   struct Hashmap hashmap = getProductHashmap(sales);
