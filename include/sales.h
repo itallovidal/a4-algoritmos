@@ -60,25 +60,6 @@ struct RegisteredSales {
   struct Sale *sales;
 };
 
-
-// struct ProductDataInList{
-//   int id;
-//   char name[50];
-//   char brand[50];
-//   float price;
-//   int quantity;
-//   float total;
-// };
-
-// // Modelo da venda para txt
-// // esse modelo representa como uma venda
-// // será registrada no txt
-
-// // cada produto será registrado em uma linha
-// // depois será agrupado pelo id da venda 
-
-
-
 // // ---
 
 struct DateToSearch {
@@ -86,15 +67,6 @@ struct DateToSearch {
   int month;
 };
 
-
-// struct SaleRowList {
-//   struct SaleRow *saleRow;
-//   int count;
-// };
-
-
-// struct SaleRowList getSaleRegistersByDay(struct DateToSearch *dateToSearch);
-// void getAllSoldProducts(struct Sale *soldProducts, int *soldProductsCount);
 struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch);
 void createSale(struct Sale *sale, int quantity);
 
