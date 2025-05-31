@@ -160,3 +160,15 @@ struct tm extractTime(long int timestamp) {
 
   return formattedDate;
 }
+
+void sortSales(struct RegisteredSales *sales) {
+  for (int i = 0; i < sales->count - 1; i++) {
+    for (int j = 0; j < sales->count - 1 - i; j++) {
+      if (sales->sales[j].total < sales->sales[j + 1].total) {
+        struct Sale temp = sales->sales[j];
+        sales->sales[j] = sales->sales[j + 1];
+        sales->sales[j + 1] = temp;
+      }
+    }
+  }
+}

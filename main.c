@@ -107,6 +107,13 @@ void listAllSalesByDay()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+  if (registeredSales.count == 0)
+  {
+    printf("\nNenhuma venda registrada nesse dia.\n");
+    return;
+  }
+
+  sortSales(&registeredSales);
   printSales(&registeredSales);
 }
 
