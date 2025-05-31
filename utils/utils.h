@@ -13,6 +13,7 @@ void clearTerminal();
 
 struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) ;
 struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales);
+struct tm extractTime(long int timestamp);
 void printSales(struct RegisteredSales *registered);
 void printProducts(struct ProductList *productList);
 #endif

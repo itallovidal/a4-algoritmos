@@ -15,7 +15,7 @@
 
 struct SaleRowTXT {
   int id;
-  char clientID[50];
+  char clientID[100];
   int productID;
   int quantity;
   float productTotalValue;

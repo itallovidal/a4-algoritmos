@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../utils/utils.h"
 
 
 struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch) {
@@ -23,6 +24,7 @@ struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch) {
   struct SaleRowTXT row;
   int previousSaleID = -1;
   int currentSale = 0;
+  
 
   while (fscanf(file, "%d %s %d %d %f %ld", 
                                           &row.id, 
@@ -33,11 +35,12 @@ struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch) {
                                           &row.date 
                                         ) == 6) {
 
-    struct tm *formattedDate = gmtime(&row.date);
+
+    struct tm formattedDate = extractTime(row.date);
     int i;
 
-    if (formattedDate->tm_mday == dateToSearch->day &&
-        formattedDate->tm_mon == dateToSearch->month) {
+    if (formattedDate.tm_mday == dateToSearch->day &&
+        formattedDate.tm_mon == dateToSearch->month) {
 
       if (previousSaleID != row.id) {
         currentSale = 0;

@@ -146,4 +146,17 @@ void clearTerminal() {
   #else
       system("clear");
   #endif
-  }
+}
+
+struct tm extractTime(long int timestamp) {
+  time_t rawTime = (time_t)timestamp;
+  struct tm formattedDate;
+
+#ifdef _WIN32
+  localtime_s(&formattedDate, &rawTime);
+#else
+  localtime_r(&formattedDate, &rawTime);
+#endif
+
+  return formattedDate;
+}
