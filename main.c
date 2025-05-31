@@ -9,6 +9,7 @@
 void registerNewSale()
 {
   clearTerminal();
+  srand(time(NULL));
 
   printf("Cadastro de venda.\n");
   printf("- - - - - - - - - - - -\n\n");
@@ -16,7 +17,7 @@ void registerNewSale()
   printf("Gere relatórios de venda, de clientes e de itens posteriormente no menu.\n\n");
 
   struct Sale sale = {
-      .id = time(NULL) / 100000 * 2,
+      .id = rand() % 1000, 
       .date = time(NULL),
       .total = 0,
       .saleList = {

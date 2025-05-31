@@ -1,1 +1,3 @@
-34974 teste@gmail.com 2 3 93.15 1748726400 
+721 teste@gmail.com 2 3 93.15 1748726935 
+770 thaissa@gmail.com 7 1 74.20 1748726950 
+770 thaissa@gmail.com 2 2 69.00 1748726950 
