@@ -6,8 +6,9 @@
 #include "./utils/utils.h"
 
 // OPTION 1 ->
-void registerNewSale() {
-  clearTerminal();  
+void registerNewSale()
+{
+  clearTerminal();
 
   printf("Cadastro de venda.\n");
   printf("- - - - - - - - - - - -\n\n");
@@ -15,15 +16,14 @@ void registerNewSale() {
   printf("Gere relatórios de venda, de clientes e de itens posteriormente no menu.\n\n");
 
   struct Sale sale = {
-    .id = time(NULL) / 100000 * 2,
-    .date = time(NULL),
-    .total = 0,
-    .saleList = {
-      .count = 0,
-      .items = malloc(sizeof(struct SaleItems) * 20),
-    }
-  };
-  
+      .id = time(NULL) / 100000 * 2,
+      .date = time(NULL),
+      .total = 0,
+      .saleList = {
+          .count = 0,
+          .items = malloc(sizeof(struct SaleItems) * 20),
+      }};
+
   struct ProductList productList = getAllproducts();
   int isAddingProduct = 1;
 
@@ -39,7 +39,8 @@ void registerNewSale() {
 
     int isProductValid = 0;
     int productID;
-    while (!isProductValid) {
+    while (!isProductValid)
+    {
       printf("\nEscolha um produto por id para acrescentar à venda.");
       printf("\n-> ");
       scanf("%d", &productID);
@@ -54,18 +55,21 @@ void registerNewSale() {
     struct Product product = getProductByID(sale.saleList.items[i].productID);
     sale.saleList.items[i].productTotalValue = sale.saleList.items[i].quantity * product.price;
 
-    if (sale.saleList.items[i].quantity >= 3) {
+    if (sale.saleList.items[i].quantity >= 3)
+    {
       printf("\nDesconto sendo aplicado ao produto.");
       printf("\n-> ");
       sale.saleList.items[i].productTotalValue *= 0.90;
     }
 
-    printf("\nDeseja registrar a venda de mais um produto?");
-    printf("\n1 - Sim | Outra tecla - Não\n\n");
-    int isAddingProduct = 0;
-    scanf("%d", &isAddingProduct);
+    char isAddingProduct;
 
-    if(!isAddingProduct) {
+    printf("\nDeseja registrar a venda de mais um produto?");
+    printf("\n1 - Sim | Qualquer tecla - Nao\n\n");
+    scanf(" %c", &isAddingProduct);
+  
+    if (isAddingProduct != '1')
+    {
       break;
     }
   }
@@ -84,7 +88,7 @@ void registerNewSale() {
 
   int totalSoldProducts = 0;
   for (int i = 0; i < registeredSales.count; i++)
-  { 
+  {
     for (int j = 0; j < registeredSales.sales[i].saleList.count; j++)
     {
       totalSoldProducts += registeredSales.sales[i].saleList.items[j].quantity;
@@ -95,19 +99,22 @@ void registerNewSale() {
 }
 
 // OPTION 2 ->
-void listAllSalesByDay() {
+void listAllSalesByDay()
+{
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
   printSales(&registeredSales);
 }
 
 // OPTION 3 ->
-void getRevenueByDay() {
+void getRevenueByDay()
+{
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
   float totalRevenue = 0;
 
-  for (int i = 0; i < registeredSales.count; i++) {
+  for (int i = 0; i < registeredSales.count; i++)
+  {
     printf("\nID da venda: %d\n", registeredSales.sales[i].id);
     printf("Valor Total da venda: %1.2f\n", registeredSales.sales[i].total);
     totalRevenue += registeredSales.sales[i].total;
@@ -118,10 +125,11 @@ void getRevenueByDay() {
 }
 
 // OPTION 4 ->
-void listMostSoldProducts() {
+void listMostSoldProducts()
+{
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
-  
+
   struct ProductSalesSummary mostSoldProduct = getMostSoldProduct(&registeredSales);
 
   struct Product product = getProductByID(mostSoldProduct.id);
@@ -130,24 +138,27 @@ void listMostSoldProducts() {
 }
 
 // OPTION 5 ->
-void listLessSoldProducts() {
+void listLessSoldProducts()
+{
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
-  
+
   struct ProductSalesSummary mostSoldProduct = getLessSoldProduct(&registeredSales);
-  
+
   struct Product product = getProductByID(mostSoldProduct.id);
   printf("\nProduto menos vendido: %s (ID: %03d)\n", product.name, product.id);
   printf("Quantidade vendida: %d\n", mostSoldProduct.count);
 }
 
-int main() {
+int main()
+{
   clearTerminal();
   int isRunning = 1;
   printf("\n\nBem vindo ao seu sistema de PetShop!\n");
   printf("---------------------\n");
 
-  while (isRunning) {
+  while (isRunning)
+  {
     printf("\n- - - - Menu - - - - \n\n");
 
     int option;
@@ -164,7 +175,8 @@ int main() {
     printf("-> ");
     scanf("%d", &option);
 
-    switch (option) {
+    switch (option)
+    {
     case 1:
       registerNewSale();
       break;
