@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 
 #include "./include/products.h"
 #include "./include/sales.h"
 #include "./utils/utils.h"
+
+
 
 // OPTION 1 ->
 void registerNewSale()
@@ -154,6 +157,9 @@ void listLessSoldProducts()
 int main()
 {
   clearTerminal();
+  SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP(CP_UTF8);
+  
   int isRunning = 1;
   printf("\n\nBem vindo ao seu sistema de PetShop!\n");
   printf("---------------------\n");
