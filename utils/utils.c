@@ -186,6 +186,14 @@ struct tm extractTime(long int timestamp)
   return formattedDate;
 }
 
+void cleanBuffer()
+{
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF)
+  {
+  }
+}
+
 void sortSales(struct RegisteredSales *sales)
 {
   for (int i = 0; i < sales->count - 1; i++)

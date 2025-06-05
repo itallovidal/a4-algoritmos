@@ -1,17 +1,19 @@
 #ifndef UTILS
 #define UTILS
 #include "../include/products.h"
-#include "../include/sales.h" 
+#include "../include/sales.h"
 
-struct ProductSalesSummary {
+struct ProductSalesSummary
+{
   int id;
   int count;
 };
 
 struct DateToSearch getDateToSearchInput();
 void clearTerminal();
+void cleanBuffer();
 
-struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) ;
+struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales);
 struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales);
 struct tm extractTime(long int timestamp);
 void printSales(struct RegisteredSales *registered);

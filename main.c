@@ -73,12 +73,13 @@ void registerNewSale()
       printf("\n-> ");
       sale.saleList.items[i].productTotalValue *= 0.90;
     }
-
-    char isAddingProduct;
+    cleanBuffer();
 
     printf("\nDeseja registrar a venda de mais um produto?");
     printf("\n1 - Sim | Qualquer tecla - Nao\n\n");
-    scanf(" %c", &isAddingProduct);
+    char isAddingProduct = getchar();
+
+    cleanBuffer();
 
     if (isAddingProduct != '1')
     {
