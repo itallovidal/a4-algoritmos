@@ -49,10 +49,21 @@ void registerNewSale()
     }
     sale.saleList.items[i].productID = atoi(productID);
 
-    printf("\nQual quantidade vendida deste produto?");
-    printf("\n-> ");
-    scanf("%d", &sale.saleList.items[i].quantity);
+    int isQuantityValid = 0;
+    int quantity = 0;
+    while (!isQuantityValid)
+    {
+      printf("\nQual quantidade vendida deste produto?");
+      printf("\n-> ");
+      scanf("%d", &quantity);
 
+      if (quantity > 0)
+      {
+        isQuantityValid = 1;
+      }
+    }
+
+    sale.saleList.items[i].quantity = quantity;
     struct Product product = getProductByID(sale.saleList.items[i].productID);
     sale.saleList.items[i].productTotalValue = sale.saleList.items[i].quantity * product.price;
 
