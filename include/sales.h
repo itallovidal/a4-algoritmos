@@ -9,7 +9,7 @@
 // esse modelo representa o conjunto das 
 // informações de uma venda unidas
 
-// id   | clientID  | productID | quantity  | productTotalValue | date
+// id   | clientID  | productID | quantity  | total             | date
 // 1    | a@.com    | 1         | 2         | 10.00             | 1745730332
 // 1    | a@.com    | 2         | 1         | 05.00             | 1745730332
 
