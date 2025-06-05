@@ -3,19 +3,24 @@
 #include "../include/sales.h"
 #include <stdio.h>
 
-struct Map {
+struct Map
+{
   int id;
   int count;
 };
 
-struct Hashmap {
+struct Hashmap
+{
   struct Map *map;
   int size;
 };
 
-int getMapIndex(struct Hashmap *hashmap, int id) {
-  for (int i = 0; i < hashmap->size; i++) {
-    if (hashmap->map[i].id == id) {
+int getMapIndex(struct Hashmap *hashmap, int id)
+{
+  for (int i = 0; i < hashmap->size; i++)
+  {
+    if (hashmap->map[i].id == id)
+    {
       return i;
     }
   }
@@ -23,21 +28,27 @@ int getMapIndex(struct Hashmap *hashmap, int id) {
   return -1;
 }
 
-struct Hashmap getProductHashmap(struct RegisteredSales *registry) {
+struct Hashmap getProductHashmap(struct RegisteredSales *registry)
+{
   struct Hashmap hashmap = {
-    .map = malloc(sizeof(struct Map) * (registry->count + 10)),
-    .size = 0,
+      .map = malloc(sizeof(struct Map) * (registry->count + 10)),
+      .size = 0,
   };
 
-  for (int i = 0; i < registry->count; i++) {
-    for (int j = 0; j < registry->sales[i].saleList.count; j++) {
+  for (int i = 0; i < registry->count; i++)
+  {
+    for (int j = 0; j < registry->sales[i].saleList.count; j++)
+    {
       int mapIndex = getMapIndex(&hashmap, registry->sales[i].saleList.items[j].productID);
-  
-      if (mapIndex == -1) {
+
+      if (mapIndex == -1)
+      {
         hashmap.map[hashmap.size].id = registry->sales[i].saleList.items[j].productID;
         hashmap.map[hashmap.size].count = registry->sales[i].saleList.items[j].quantity;
         hashmap.size++;
-      } else {
+      }
+      else
+      {
         hashmap.map[mapIndex].count += registry->sales[i].saleList.items[j].quantity;
       }
     }
@@ -46,16 +57,19 @@ struct Hashmap getProductHashmap(struct RegisteredSales *registry) {
   return hashmap;
 }
 
-struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) {
+struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales)
+{
   struct Hashmap hashmap = getProductHashmap(sales);
 
   struct ProductSalesSummary lessSoldProduct = {
-    .id = -1,
-    .count = 9999999,
+      .id = -1,
+      .count = 9999999,
   };
 
-  for (int j = 0; j < hashmap.size; j++) {
-    if (hashmap.map[j].count < lessSoldProduct.count) {
+  for (int j = 0; j < hashmap.size; j++)
+  {
+    if (hashmap.map[j].count < lessSoldProduct.count)
+    {
       lessSoldProduct.count = hashmap.map[j].count;
       lessSoldProduct.id = hashmap.map[j].id;
     }
@@ -66,16 +80,19 @@ struct ProductSalesSummary getLessSoldProduct(struct RegisteredSales *sales) {
   return lessSoldProduct;
 }
 
-struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales) {
+struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales)
+{
   struct Hashmap hashmap = getProductHashmap(sales);
 
   struct ProductSalesSummary mostSoldProduct = {
-    .id = -1,
-    .count = 0,
+      .id = -1,
+      .count = 0,
   };
 
-  for (int j = 0; j < hashmap.size; j++) {
-    if (hashmap.map[j].count > mostSoldProduct.count) {
+  for (int j = 0; j < hashmap.size; j++)
+  {
+    if (hashmap.map[j].count > mostSoldProduct.count)
+    {
       mostSoldProduct.count = hashmap.map[j].count;
       mostSoldProduct.id = hashmap.map[j].id;
     }
@@ -86,7 +103,8 @@ struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales) {
   return mostSoldProduct;
 }
 
-struct DateToSearch getDateToSearchInput() {
+struct DateToSearch getDateToSearchInput()
+{
   struct DateToSearch dateToSearch;
 
   printf("\nDigite o Dia abaixo para listar o relatório:\n");
@@ -99,11 +117,13 @@ struct DateToSearch getDateToSearchInput() {
   return dateToSearch;
 }
 
-void printSales(struct RegisteredSales *registered) {
+void printSales(struct RegisteredSales *registered)
+{
   printf("\nTotal de vendas nesse dia: %d\n", registered->count);
   printf("- - - - - - - - - - - -\n\n");
 
-  for (int i = 0; i < registered->count; i++) {
+  for (int i = 0; i < registered->count; i++)
+  {
     printf("- - - - - - - - - - - -\n\n");
     printf("ID -> %d\n", registered->sales[i].id);
     printf("Quantidade de produtos diferentes comprados: %d\n",
@@ -115,7 +135,8 @@ void printSales(struct RegisteredSales *registered) {
 
     int itemsCount = 0;
 
-    for (int j = 0; j < registered->sales[i].saleList.count; j++) {
+    for (int j = 0; j < registered->sales[i].saleList.count; j++)
+    {
       printf("%03d |", registered->sales[i].saleList.items[j].productID);
       printf(" %d\n", registered->sales[i].saleList.items[j].quantity);
       itemsCount += registered->sales[i].saleList.items[j].quantity;
@@ -127,44 +148,52 @@ void printSales(struct RegisteredSales *registered) {
   return;
 }
 
-void printProducts(struct ProductList *list) {
+void printProducts(struct ProductList *list)
+{
   printf("\nTabela de produtos:\n");
   printf("- - - - - - - - - - - -\n\n");
   printf("%4s | %15s | %7s | %30s \n", "id", "marca", "valor", "nome");
-  for (int i = 0; i < list->count; i++) {
+  for (int i = 0; i < list->count; i++)
+  {
     printf("%4d | %15s | %7.2f | %30s \n", list->product[i].id,
-            list->product[i].brand,
+           list->product[i].brand,
            list->product[i].price, list->product[i].name);
   }
 
   return;
 }
 
-void clearTerminal() {
-  #ifdef _WIN32
-      system("cls");
-  #else
-      system("clear");
-  #endif
+void clearTerminal()
+{
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
 }
 
-struct tm extractTime(long int timestamp) {
+struct tm extractTime(long int timestamp)
+{
   time_t rawTime = (time_t)timestamp;
   struct tm formattedDate;
 
 #ifdef _WIN32
-  localtime_s(&formattedDate, &rawTime);
+  formattedDate = *localtime(&rawTime);
 #else
-  localtime_r(&formattedDate, &rawTime);
+  formattedDate = *gmtime(&rawTime);
 #endif
 
   return formattedDate;
 }
 
-void sortSales(struct RegisteredSales *sales) {
-  for (int i = 0; i < sales->count - 1; i++) {
-    for (int j = 0; j < sales->count - 1 - i; j++) {
-      if (sales->sales[j].total < sales->sales[j + 1].total) {
+void sortSales(struct RegisteredSales *sales)
+{
+  for (int i = 0; i < sales->count - 1; i++)
+  {
+    for (int j = 0; j < sales->count - 1 - i; j++)
+    {
+      if (sales->sales[j].total < sales->sales[j + 1].total)
+      {
         struct Sale temp = sales->sales[j];
         sales->sales[j] = sales->sales[j + 1];
         sales->sales[j + 1] = temp;

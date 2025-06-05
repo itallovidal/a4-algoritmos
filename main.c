@@ -13,7 +13,7 @@ void registerNewSale()
 
   printf("Cadastro de venda.\n");
   printf("- - - - - - - - - - - -\n\n");
-  printf("Adicione o email do cliente e seus itens no sistema.\n");
+  printf("Identifique o cliente e adicione seus itens no sistema.\n");
   printf("Gere relatórios de venda, de clientes e de itens posteriormente no menu.\n\n");
 
   struct Sale sale = {
@@ -28,7 +28,7 @@ void registerNewSale()
   struct ProductList productList = getAllproducts();
   int isAddingProduct = 1;
 
-  printf("Adicione o email do cliente:");
+  printf("Adicione o identificador do cliente:");
   printf("\n-> ");
   scanf("%s", sale.clientID);
 
@@ -39,15 +39,15 @@ void registerNewSale()
     printProducts(&productList);
 
     int isProductValid = 0;
-    int productID;
+    char productID[10];
     while (!isProductValid)
     {
       printf("\nEscolha um produto por id para acrescentar à venda.");
       printf("\n-> ");
-      scanf("%d", &productID);
+      scanf(" %s", productID);
       isProductValid = verifyProductID(&productList, productID);
     }
-    sale.saleList.items[i].productID = productID;
+    sale.saleList.items[i].productID = atoi(productID);
 
     printf("\nQual quantidade vendida deste produto?");
     printf("\n-> ");
