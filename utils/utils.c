@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "../include/sales.h"
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
 struct Map
 {
@@ -106,12 +108,71 @@ struct ProductSalesSummary getMostSoldProduct(struct RegisteredSales *sales)
 struct DateToSearch getDateToSearchInput()
 {
   struct DateToSearch dateToSearch;
+  char input[10];
+  int isValidInput = 0;
 
-  printf("\nDigite o Dia abaixo para listar o relatório:\n");
-  printf("Padrão da data: dd/mm -> ");
-  char input[30];
-  scanf("%s", input);
-  sscanf(input, "%d/%d", &dateToSearch.day, &dateToSearch.month);
+  char day[3];
+  char month[3];
+
+  while (!isValidInput)
+  {
+    printf("\nDigite o Dia abaixo para listar o relatório:\n");
+    printf("Padrão da data aceito: dd/mm -> ");
+    scanf(" %s", input);
+
+    int letterCount = 0;
+    for (int i = 0; i < 10; i++)
+    {
+      if (input[i] == '\0')
+      {
+        break;
+      }
+      letterCount++;
+    }
+
+    if (letterCount != 5)
+    {
+      printf("Número de caracteres errado.");
+      printf("O padrão é dd/mm. Exemplo: 03/04");
+      continue;
+    }
+
+    if (input[2] != '/')
+    {
+      printf("falta a barra.");
+      continue;
+    }
+
+    strncpy(day, input, 2);
+    day[2] = '\0';
+
+    strncpy(month, input + 3, 2);
+    month[2] = '\0';
+
+    for (int j = 0; j < 3; j++)
+    {
+      if (j == 2)
+      {
+        isValidInput = 1;
+        break;
+      }
+
+      if (!isdigit(day[j]))
+      {
+        printf("\nDia não é um dígito.\n");
+        break;
+      }
+
+      if (!isdigit(month[j]))
+      {
+        printf("\nMês não é um dígito.");
+        break;
+      }
+    }
+  }
+
+  dateToSearch.day = atoi(day);
+  dateToSearch.month = atoi(month);
   dateToSearch.month -= 1;
 
   return dateToSearch;
