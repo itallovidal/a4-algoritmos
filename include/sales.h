@@ -77,4 +77,6 @@ void createSale(struct Sale *sale, int quantity);
 struct RegisteredSales getAllSales();
 int deleteSaleById(struct RegisteredSales *sales, int id);
 void updateTXT(struct RegisteredSales *sales);
+int updateSaleById(struct RegisteredSales *sales, int id);
+struct Sale getNewSaleInformation();
 #endif

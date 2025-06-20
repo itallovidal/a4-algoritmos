@@ -16,78 +16,9 @@ void registerNewSale()
   printf("Identifique o cliente e adicione seus itens no sistema.\n");
   printf("Gere relatórios de venda, de clientes e de itens posteriormente no menu.\n\n");
 
-  struct Sale sale = {
-      .id = rand() % 1000,
-      .date = time(NULL),
-      .total = 0,
-      .saleList = {
-          .count = 0,
-          .items = malloc(sizeof(struct SaleItems) * 20),
-      }};
-
-  struct ProductList productList = getAllproducts();
-  int isAddingProduct = 1;
-
-  printf("Adicione o identificador do cliente:");
-  printf("\n-> ");
-  scanf("%s", sale.clientID);
-
-  for (int i = 0; i < 20; i++)
-  {
-    sale.saleList.count++;
-
-    printProducts(&productList);
-
-    int isProductValid = 0;
-    char productID[10];
-    while (!isProductValid)
-    {
-      printf("\nEscolha um produto por id para acrescentar à venda.");
-      printf("\n-> ");
-      scanf(" %s", productID);
-      isProductValid = verifyProductID(&productList, productID);
-    }
-    sale.saleList.items[i].productID = atoi(productID);
-
-    int isQuantityValid = 0;
-    int quantity = 0;
-    while (!isQuantityValid)
-    {
-      printf("\nQual quantidade vendida deste produto?");
-      printf("\n-> ");
-      scanf("%d", &quantity);
-
-      if (quantity > 0)
-      {
-        isQuantityValid = 1;
-      }
-    }
-
-    sale.saleList.items[i].quantity = quantity;
-    struct Product product = getProductByID(sale.saleList.items[i].productID);
-    sale.saleList.items[i].productTotalValue = sale.saleList.items[i].quantity * product.price;
-
-    if (sale.saleList.items[i].quantity >= 3)
-    {
-      printf("\nDesconto sendo aplicado ao produto.");
-      printf("\n-> ");
-      sale.saleList.items[i].productTotalValue *= 0.90;
-    }
-    cleanBuffer();
-
-    printf("\nDeseja registrar a venda de mais um produto?");
-    printf("\n1 - Sim | Qualquer tecla - Nao\n\n");
-    char isAddingProduct = getchar();
-
-    cleanBuffer();
-
-    if (isAddingProduct != '1')
-    {
-      break;
-    }
-  }
-
   printf("Salvando..\n");
+
+  struct Sale sale = getNewSaleInformation();
   createSale(&sale, sale.saleList.count);
 
   printf("\n-----\n");
@@ -111,7 +42,27 @@ void registerNewSale()
   printf("\n\n Total de itens vendidos no dia: %d\n", totalSoldProducts);
 }
 
-void alterSale() {}
+void alterSale()
+{
+  struct RegisteredSales registeredSales = getAllSales();
+
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas cadastradas por enquanto.\n");
+    return;
+  }
+
+  int id;
+  printf("Digite o id da venda a alterar:");
+  scanf(" %d", &id);
+
+  int isUpdateSuccessfull = updateSaleById(&registeredSales, id);
+
+  if (isUpdateSuccessfull)
+  {
+    updateTXT(&registeredSales);
+  }
+}
 
 void deleteSale()
 {
@@ -254,6 +205,7 @@ int main()
       registerNewSale();
       break;
     case 2:
+      alterSale();
       break;
     case 3:
       deleteSale();

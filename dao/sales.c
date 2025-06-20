@@ -179,6 +179,22 @@ void createSale(struct Sale *sale, int quantity)
   printf("Venda registrada com sucesso!\n");
 }
 
+int updateSaleById(struct RegisteredSales *sales, int id)
+{
+  for (int i = 0; i < sales->count; i++)
+  {
+    if (sales->sales[i].id == id)
+    {
+      struct Sale sale = getNewSaleInformation();
+      sales->sales[i] = sale;
+      return 1;
+    }
+  }
+
+  printf("ID não encontrado. Vendas permanecem as mesmas.\n");
+  return 0;
+}
+
 int deleteSaleById(struct RegisteredSales *sales, int id)
 {
   struct RegisteredSales updatedSales =
@@ -208,6 +224,82 @@ int deleteSaleById(struct RegisteredSales *sales, int id)
   sales->count = updatedSales.count;
 
   return 1;
+}
+
+struct Sale getNewSaleInformation()
+{
+  struct Sale sale = {
+      .id = rand() % 1000,
+      .date = time(NULL),
+      .total = 0,
+      .saleList = {
+          .count = 0,
+          .items = malloc(sizeof(struct SaleItems) * 20),
+      }};
+
+  struct ProductList productList = getAllproducts();
+  int isAddingProduct = 1;
+
+  printf("Adicione o identificador do cliente:");
+  printf("\n-> ");
+  scanf("%s", sale.clientID);
+
+  for (int i = 0; i < 20; i++)
+  {
+    sale.saleList.count++;
+
+    printProducts(&productList);
+
+    int isProductValid = 0;
+    char productID[10];
+    while (!isProductValid)
+    {
+      printf("\nEscolha um produto por id para acrescentar à venda.");
+      printf("\n-> ");
+      scanf(" %s", productID);
+      isProductValid = verifyProductID(&productList, productID);
+    }
+    sale.saleList.items[i].productID = atoi(productID);
+
+    int isQuantityValid = 0;
+    int quantity = 0;
+    while (!isQuantityValid)
+    {
+      printf("\nQual quantidade vendida deste produto?");
+      printf("\n-> ");
+      scanf("%d", &quantity);
+
+      if (quantity > 0)
+      {
+        isQuantityValid = 1;
+      }
+    }
+
+    sale.saleList.items[i].quantity = quantity;
+    struct Product product = getProductByID(sale.saleList.items[i].productID);
+    sale.saleList.items[i].productTotalValue = sale.saleList.items[i].quantity * product.price;
+
+    if (sale.saleList.items[i].quantity >= 3)
+    {
+      printf("\nDesconto sendo aplicado ao produto.");
+      printf("\n-> ");
+      sale.saleList.items[i].productTotalValue *= 0.90;
+    }
+    cleanBuffer();
+
+    printf("\nDeseja registrar a venda de mais um produto?");
+    printf("\n1 - Sim | Qualquer tecla - Nao\n\n");
+    char isAddingProduct = getchar();
+
+    cleanBuffer();
+
+    if (isAddingProduct != '1')
+    {
+      break;
+    }
+  }
+
+  return sale;
 }
 
 void updateTXT(struct RegisteredSales *sales)
