@@ -116,6 +116,13 @@ void listAllSalesByDay()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas nesse dia.");
+    return;
+  }
+
   if (registeredSales.count == 0)
   {
     printf("\nNenhuma venda registrada nesse dia.\n");
@@ -131,6 +138,13 @@ void getRevenueByDay()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
+
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas nesse dia.");
+    return;
+  }
+
   float totalRevenue = 0;
 
   for (int i = 0; i < registeredSales.count; i++)
@@ -150,6 +164,12 @@ void listMostSoldProducts()
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
 
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas nesse dia.");
+    return;
+  }
+
   struct ProductSalesSummary mostSoldProduct = getMostSoldProduct(&registeredSales);
 
   struct Product product = getProductByID(mostSoldProduct.id);
@@ -163,6 +183,12 @@ void listLessSoldProducts()
   struct DateToSearch dateToSearch = getDateToSearchInput();
   struct RegisteredSales registeredSales = getSalesByDay(&dateToSearch);
 
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas nesse dia.");
+    return;
+  }
+
   struct ProductSalesSummary mostSoldProduct = getLessSoldProduct(&registeredSales);
 
   struct Product product = getProductByID(mostSoldProduct.id);
@@ -175,7 +201,7 @@ int main()
   clearTerminal();
 
   int isRunning = 1;
-  printf("\n\nBem vindo ao seu sistema de PetShop!\n");
+  printf("\n\nBem vindo ao sistema!\n");
   printf("---------------------\n");
 
   while (isRunning)
