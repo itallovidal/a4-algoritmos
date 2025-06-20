@@ -180,7 +180,7 @@ struct DateToSearch getDateToSearchInput()
 
 void printSales(struct RegisteredSales *registered)
 {
-  printf("\nTotal de vendas nesse dia: %d\n", registered->count);
+  printf("\nTotal de vendas: %d\n", registered->count);
   printf("- - - - - - - - - - - -\n\n");
 
   for (int i = 0; i < registered->count; i++)

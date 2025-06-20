@@ -111,7 +111,31 @@ void registerNewSale()
   printf("\n\n Total de itens vendidos no dia: %d\n", totalSoldProducts);
 }
 
-// OPTION 2 ->
+void alterSale() {}
+
+void deleteSale()
+{
+  struct RegisteredSales registeredSales = getAllSales();
+
+  if (registeredSales.count == 0)
+  {
+    printf("Sem vendas cadastradas por enquanto.\n");
+    return;
+  }
+
+  int id;
+  printf("Digite o id da venda a excluir:");
+  scanf(" %d", &id);
+
+  int isDeletinoSuccessfull = deleteSaleById(&registeredSales, id);
+
+  if (isDeletinoSuccessfull)
+  {
+    updateTXT(&registeredSales);
+  }
+}
+
+// OPTION 4 ->
 void listAllSalesByDay()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -133,7 +157,7 @@ void listAllSalesByDay()
   printSales(&registeredSales);
 }
 
-// OPTION 3 ->
+// OPTION 5 ->
 void getRevenueByDay()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -158,7 +182,7 @@ void getRevenueByDay()
          dateToSearch.day, dateToSearch.month + 1, totalRevenue);
 }
 
-// OPTION 4 ->
+// OPTION 6 ->
 void listMostSoldProducts()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -177,7 +201,7 @@ void listMostSoldProducts()
   printf("Quantidade vendida: %d\n", mostSoldProduct.count);
 }
 
-// OPTION 5 ->
+// OPTION 7 ->
 void listLessSoldProducts()
 {
   struct DateToSearch dateToSearch = getDateToSearchInput();
@@ -210,14 +234,16 @@ int main()
 
     int option;
     printf("1 - Cadastrar uma nova venda\n");
+    printf("2 - Alterar uma venda pelo ID\n");
+    printf("3 - Excluir uma venda pelo ID\n");
     printf("- - - - - - - - - - - -\n");
-    printf("2 - Listagem de vendas no dia X\n");
-    printf("3 - Faturamento de vendas no dia X\n");
+    printf("4 - Listagem de vendas no dia X\n");
+    printf("5 - Faturamento de vendas no dia X\n");
     printf("- - - - - - - - - - - -\n");
-    printf("4 - Produtos mais vendido no dia X\n");
-    printf("5 - Produtos menos vendido no dia X\n");
+    printf("6 - Produtos mais vendido no dia X\n");
+    printf("7 - Produtos menos vendido no dia X\n");
     printf("- - - - - - - - - - - -\n");
-    printf("6 - Sair");
+    printf("8 - Sair");
     printf("\n\n- - - - - - - - - - \n\n");
     printf("-> ");
     scanf("%d", &option);
@@ -228,18 +254,23 @@ int main()
       registerNewSale();
       break;
     case 2:
-      listAllSalesByDay();
       break;
     case 3:
-      getRevenueByDay();
+      deleteSale();
       break;
     case 4:
-      listMostSoldProducts();
+      listAllSalesByDay();
       break;
     case 5:
-      listLessSoldProducts();
+      getRevenueByDay();
       break;
     case 6:
+      listMostSoldProducts();
+      break;
+    case 7:
+      listLessSoldProducts();
+      break;
+    case 8:
       isRunning = 0;
       break;
     default:

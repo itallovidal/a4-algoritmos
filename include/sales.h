@@ -4,16 +4,16 @@
 
 #define SELL_FILE_PATH "data/sales.txt"
 
-
 // Modelo da venda
-// esse modelo representa o conjunto das 
+// esse modelo representa o conjunto das
 // informações de uma venda unidas
 
 // id   | clientID  | productID | quantity  | total             | date
 // 1    | a@.com    | 1         | 2         | 10.00             | 1745730332
 // 1    | a@.com    | 2         | 1         | 05.00             | 1745730332
 
-struct SaleRowTXT {
+struct SaleRowTXT
+{
   int id;
   char clientID[100];
   int productID;
@@ -36,18 +36,21 @@ struct SaleRowTXT {
 //     date: 1745730332
 // }
 
-struct SaleItems {
+struct SaleItems
+{
   int productID;
   int quantity;
   float productTotalValue;
 };
 
-struct SaleList {
+struct SaleList
+{
   int count;
-  struct SaleItems* items;
+  struct SaleItems *items;
 };
 
-struct Sale {
+struct Sale
+{
   int id;
   char clientID[50];
   struct SaleList saleList;
@@ -55,19 +58,23 @@ struct Sale {
   time_t date;
 };
 
-struct RegisteredSales {
+struct RegisteredSales
+{
   int count;
   struct Sale *sales;
 };
 
 // // ---
 
-struct DateToSearch {
+struct DateToSearch
+{
   int day;
   int month;
 };
 
 struct RegisteredSales getSalesByDay(struct DateToSearch *dateToSearch);
 void createSale(struct Sale *sale, int quantity);
-
+struct RegisteredSales getAllSales();
+int deleteSaleById(struct RegisteredSales *sales, int id);
+void updateTXT(struct RegisteredSales *sales);
 #endif
