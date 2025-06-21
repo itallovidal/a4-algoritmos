@@ -120,6 +120,8 @@ void getRevenueByDay()
     return;
   }
 
+  sortSales(&registeredSales);
+
   float totalRevenue = 0;
 
   for (int i = 0; i < registeredSales.count; i++)
@@ -191,8 +193,8 @@ int main()
     printf("4 - Listagem de vendas no dia X\n");
     printf("5 - Faturamento de vendas no dia X\n");
     printf("- - - - - - - - - - - -\n");
-    printf("6 - Produtos mais vendido no dia X\n");
-    printf("7 - Produtos menos vendido no dia X\n");
+    printf("6 - Produto mais vendido no dia X\n");
+    printf("7 - Produto menos vendido no dia X\n");
     printf("- - - - - - - - - - - -\n");
     printf("8 - Sair");
     printf("\n\n- - - - - - - - - - \n\n");
