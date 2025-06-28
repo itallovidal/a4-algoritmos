@@ -20,6 +20,7 @@ void registerNewSale()
 
   struct Sale sale = getNewSaleInformation();
   createSale(&sale, sale.saleList.count);
+  printf("Venda registrada com sucesso!\n");
 
   printf("\n-----\n");
 

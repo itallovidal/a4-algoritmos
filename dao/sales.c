@@ -176,7 +176,6 @@ void createSale(struct Sale *sale, int quantity)
   }
 
   fclose(file);
-  printf("Venda registrada com sucesso!\n");
 }
 
 int updateSaleById(struct RegisteredSales *sales, int id)
